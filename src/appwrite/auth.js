@@ -1,7 +1,7 @@
 /* eslint-disable no-unreachable */
 /* eslint-disable no-useless-catch */
 /* eslint-disable no-unused-vars */
-import conf from "../conf.js";
+import conf from "../conf/conf.js";
 import { Client,Account,ID } from "appwrite";
 
 export class AuthService {
