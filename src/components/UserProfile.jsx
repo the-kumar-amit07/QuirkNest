@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { MdOutlineCancel } from "react-icons/md"
+import { UserPen,Inbox,FileImage } from 'lucide-react';
 import { Button } from '../components'
 import avatar from '../data/avatar.jpeg'
 
@@ -10,9 +10,28 @@ const UserProfile = () => {
 
   const userProfileData = [
     {
-      
-    }
-  ]
+        icon: <UserPen />,
+        title: "My Profile",
+        desc: "Account Settings",
+        iconColor: "#03C9D7",
+        iconBg: "#E5FAFB",
+    },
+    {
+        icon: <Inbox />,
+        title: "My Inbox",
+        desc: "Messages & Emails",
+        iconColor: "rgb(0, 194, 146)",
+        iconBg: "rgb(235, 250, 242)",
+    },
+    {
+        icon: <FileImage />,
+        title: "My Post",
+        desc: "To-do and Daily Tasks",
+        iconColor: "rgb(255, 244, 229)",
+        iconBg: "rgb(254, 201, 15)",
+    },
+    ];
+
   
   return (
     <div className='nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96 shadow-xl '>

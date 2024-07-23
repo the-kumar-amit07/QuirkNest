@@ -74,7 +74,7 @@ function Navbar() {
                       {/* <span>
                         <ChevronDown className="ml-2 h-4 w-4" />
                       </span> */}
-                   
+                    
                     </button>
                   </li>
                   ) : null
@@ -107,11 +107,11 @@ function Navbar() {
                   <div className="px-5 pb-6 pt-5">
                     <div className="flex items-center justify-between">
                       <div className="inline-flex items-center space-x-2">
-                       <Link
-                       to='/'
-                       >
-                       <img src={Logo} alt="" className="rounded-sm h-32 w-32"  />
-                       </Link>
+                        <Link
+                        to='/'
+                        >
+                        <img src={Logo} alt="" className="rounded-sm h-32 w-32"  />
+                        </Link>
                       </div>
                       <div className="-mr-2">
                         <button
@@ -134,7 +134,7 @@ function Navbar() {
                           >
                             <button 
                             onClick={()=> navigate(item.slug)}
-                             className="ml-3 text-base font-medium text-gray-900">
+                              className="ml-3 text-base font-medium text-gray-900">
                               {item.name}
                             </button>
                             {/* <span>
