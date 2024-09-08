@@ -4,6 +4,7 @@ import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../assets/Logo.jpg'
 import { useSelector } from 'react-redux';
+import {UserProfile} from './index'
 
 
 function Navbar() {
@@ -89,14 +90,13 @@ function Navbar() {
               ></input>
             </div>
             <div className="ml-2 mt-2 hidden lg:block">
-              <span className="relative inline-block">
-                <img
-                  className="h-10 w-10 rounded-full"
-                  src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
-                  alt="Dan_Abromov"
-                />
-                <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-600 ring-2 ring-white"></span>
-              </span>
+            {authStatus ? (
+              <UserProfile/>
+            ) : (
+                <div className='flex space-x-4'>
+                  
+                </div>
+            )}
             </div>
             <div className="ml-2 lg:hidden">
               <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
