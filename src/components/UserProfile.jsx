@@ -2,7 +2,7 @@
 import React from 'react'
 import { UserPen,Inbox,FileImage } from 'lucide-react';
 import { Button } from '../components'
-import avatar from '../data/avatar.jpeg'
+// import avatar from '../data/avatar.jpeg'
 
 
 
@@ -10,7 +10,7 @@ const UserProfile = () => {
 
   const userProfileData = [
     {
-        icon: <UserPen />,
+        icon: <UserPen/>,
         title: "My Profile",
         desc: "Account Settings",
         iconColor: "#03C9D7",
@@ -45,7 +45,7 @@ const UserProfile = () => {
         />
       </div>
       <div className='flex gap-5 items-center mt-6 border-color border-b-1 pb-6'>
-        <img className='rounded-full h-20 w-20' src={avatar} alt="user-profile" />
+        <img className='rounded-full h-20 w-20'  alt="user-profile" />
       <div>
         <p className='font-semibold text-xl dark:text-gray-200'>Amit Kumar Marndi</p>
         <p className='text-gray-500 text-sm dark:text-gray-400'>Developer</p> 

@@ -4,7 +4,7 @@ import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../assets/Logo.jpg'
 import { useSelector } from 'react-redux';
-import {UserProfile} from './index'
+import {Button, UserProfile} from './index'
 
 
 function Navbar() {
@@ -94,7 +94,16 @@ function Navbar() {
               <UserProfile/>
             ) : (
                 <div className='flex space-x-4'>
-                  
+                  {authMenuItems.map(
+                    (item) => item.active && (
+                      <Button key={item.name}
+                        onClick={() => navigate(item.slug)}
+                        className='text-sm font-semibold'
+                      >
+                        {item.name}
+                      </Button>
+                    )
+                  )}
                 </div>
             )}
             </div>
