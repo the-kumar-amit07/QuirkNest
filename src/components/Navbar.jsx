@@ -194,7 +194,7 @@ function Navbar() {
               </div>
           )}
           {/* User Profile Popup */}
-          
+          {isProfileOpen && <UserProfile onclose={()=> setIsProfileOpen(false)} />}
           </div>
         </div>
       )

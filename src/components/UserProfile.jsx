@@ -1,12 +1,13 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { UserPen,Inbox,FileImage } from 'lucide-react';
+import { UserPen,Inbox,FileImage,CircleX } from 'lucide-react';
 import { Button } from '../components'
 // import avatar from '../data/avatar.jpeg'
 
 
 
-const UserProfile = () => {
+const UserProfile = ({onclose}) => {
 
   const userProfileData = [
     {
@@ -42,6 +43,8 @@ const UserProfile = () => {
         bgHoverColor='light-gray'
         size='2xl'
         borderRadius='50%'
+        onClick={onclose}
+        icon = {<CircleX />}
         />
       </div>
       <div className='flex gap-5 items-center mt-6 border-color border-b-1 pb-6'>
