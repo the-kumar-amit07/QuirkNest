@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useState } from 'react'
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../assets/Logo.jpg'
@@ -12,11 +12,18 @@ function Navbar() {
     const navigate = useNavigate();
     const authStatus = useSelector((state) => state.auth.status)
 
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isProfileOpen,setIsProfileOpen] = useState(false)
 
     const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen)
+  }
+  
+  const handleClick = (section) => {
+    if (section === 'userProfile') {
+      setIsProfileOpen(!isProfileOpen) //Toggle the user profile popup
     }
+  }
 
     const menuItems = [
         {
@@ -61,7 +68,9 @@ function Navbar() {
               <Link to='/'>
               <img src={Logo} alt="" className="rounded-sm h-32 w-32" />
               </Link>
-            </div>
+          </div>
+
+          {/* Menu Items for Large Screens */}
             <div className="hidden lg:block">
               <ul className="ml-12 inline-flex space-x-8">
                 {menuItems.map((item) => 
@@ -70,7 +79,7 @@ function Navbar() {
                     <button
                     onClick={()=> navigate(item.slug)}
                     className="inline-flex items-center text-sm font-semibold text-gray-800 hover:text-gray-900"
-                     >
+                      >
                       {item.name}
                       {/* <span>
                         <ChevronDown className="ml-2 h-4 w-4" />
@@ -81,17 +90,30 @@ function Navbar() {
                   ) : null
                 )}
               </ul>
-            </div>
+          </div>
+
+          {/* Search Input */}
             <div className="flex grow justify-end">
               <input
                 className="flex h-10 w-[250px] rounded-md bg-gray-100 px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                 type="text"
                 placeholder="Serach"
               ></input>
-            </div>
+          </div>
+          
+          {/* Authenticated User Profile or Auth Menu */}
             <div className="ml-2 mt-2 hidden lg:block">
             {authStatus ? (
-              <UserProfile/>
+              <div
+                className='flex items-center gap-2 cursor-pointer p-1 hover:bg-gray-500 rounded-lg'
+                onClick={() => handleClick('userProfile')}
+              >
+                <img src="" alt="user avatar" className='rounded-full w-32 h-32 object-cover'/>
+                <p>
+                  <span className="text-gray-400 text-14">Hi,</span> {''}
+                  <span className="text-gray-400 font-bold ml-1 text-14">Amit</span> {/* Replace 'Amit' with dynamic user name */}
+                </p>
+              </div>
             ) : (
                 <div className='flex space-x-4'>
                   {authMenuItems.map(
@@ -106,10 +128,13 @@ function Navbar() {
                   )}
                 </div>
             )}
-            </div>
+          </div>
+          
+          {/* Mobile Menu Icon */}
             <div className="ml-2 lg:hidden">
               <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
             </div>
+          {/* Mobile Menu */}
             {isMenuOpen && (
               <div className="absolute inset-x-0 top-0 z-50 origin-top-right transform p-2 transition lg:hidden">
                 <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
@@ -167,7 +192,9 @@ function Navbar() {
                   </div>
                 </div>
               </div>
-            )}
+          )}
+          {/* User Profile Popup */}
+          
           </div>
         </div>
       )
