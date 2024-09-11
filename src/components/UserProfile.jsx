@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { UserPen,Inbox,FileImage,CircleX } from 'lucide-react';
-import { Button } from '../components'
+import { Button } from './Button'
 // import avatar from '../data/avatar.jpeg'
 
 
