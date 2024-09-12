@@ -10,6 +10,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import PostCard from "./PostCard"
 import PostCardForm from "./PostCardFrom"
+import Container from "./Container";
 
 
 export {
@@ -24,5 +25,6 @@ export {
   Login,
   Signup,
   PostCard,
-  PostCardForm
+  PostCardForm,
+  Container,
 };
