@@ -3,9 +3,9 @@
 import React,{useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import Loading from './index'
+import {Loading }from './index'
 
-function Protected({
+export default function Protected({
     children,
     authentication = true,
 }) {
@@ -20,15 +20,12 @@ function Protected({
         }
         setLoader(false)
     },[authStatus,authentication,navigate])
-  return (
+    return (
     loader ? 
     <div>
         <Loading type = 'bars' colors= 'purple'/>
     </div> : 
     <>{children}</>
-
-
-  )
+    )
 }
 
-export default Protected

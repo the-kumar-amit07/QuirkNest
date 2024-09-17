@@ -79,18 +79,19 @@ function PostCardFrom({ post }) {
     return "";
   }, []);
 
-  useEffect(
-    (value, { name }) => {
-      if (name === "title") {
-        setValue("slug", slugTransform(value.title), { shouldValidate: true });
-      }
-    },
-    [watch, setValue, slugTransform]
-  );
+  useEffect(() => {
+    const subscription = watch((value, { name }) => {
+        if (name === "title") {
+            setValue("slug", slugTransform(value.title), { shouldValidate: true });
+        }
+    });
+
+    return () => subscription.unsubscribe();
+}, [watch, slugTransform, setValue]);
 
   return (
     <form
-      onSubmit={handleSubmit(onsubmit)}
+      onSubmit={handleSubmit(onSubmit)}
       className="flex flex-wrap bg-white shadow-lg rounded-lg p-6"
     >
       <div className="w-full md:w-2/3 px-4">

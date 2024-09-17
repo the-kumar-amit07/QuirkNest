@@ -1,6 +1,4 @@
-/* eslint-disable no-unreachable */
-/* eslint-disable no-useless-catch */
-/* eslint-disable no-unused-vars */
+
 import conf from "../conf/conf.js";
 import { Client,Account,ID } from "appwrite";
 
@@ -13,10 +11,13 @@ export class AuthService {
                     .setEndpoint(conf.appwriteUrl)
                     .setProject(conf.appwriteProjectId);
         this.account = new Account(this.client);
+        console.log("Appwrite URL:", conf.appwriteUrl);
     }
 
     //create account
-    async createAccount({email,password,name}){
+    async createAccount({ email, password, name }) {
+        console.log(email,password,name);
+        
         try {
             const userAccount = await this.account.create(ID.unique(),email,password,name);
             if (userAccount){
@@ -24,6 +25,7 @@ export class AuthService {
                 return this.logIn({email,password})
             }else{
                 return userAccount
+                
             }
         } catch (error) {
             console.log(`Appwrite::createAccount::error::${error}`);

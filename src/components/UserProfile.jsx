@@ -2,12 +2,17 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { UserPen,Inbox,FileImage,CircleX } from 'lucide-react';
-import { Button } from './Button'
+import { Button } from './index'
+import { useDispatch } from 'react-redux';
+import authService from '../appwrite/auth'
+import { logout } from '../store/authSlice';
 // import avatar from '../data/avatar.jpeg'
 
 
 
-const UserProfile = ({onclose}) => {
+const UserProfile = ({ onclose }) => {
+  
+  const dispatch = useDispatch()
 
   const userProfileData = [
     {
@@ -31,7 +36,13 @@ const UserProfile = ({onclose}) => {
         iconColor: "rgb(255, 244, 229)",
         iconBg: "rgb(254, 201, 15)",
     },
-    ];
+  ];
+  
+  const handleLogout = () => {
+    authService.logOut().then(() => {
+      dispatch(logout())
+    })
+  }
 
   
   return (
@@ -78,6 +89,7 @@ const UserProfile = ({onclose}) => {
       text= 'Logout'
       borderRadius='10px'
       width='full'
+      onClick={handleLogout}
       />
     </div>
     </div>

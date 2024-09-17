@@ -5,4 +5,6 @@ const conf ={
     appwriteCollectionId:String(import.meta.env.VITE_APPWRITE_COLLECTION_ID),
     appwriteBucketId:String(import.meta.env.VITE_APPWRITE_BUCKET_ID),
 }
+console.log("Appwrite URL:", conf.appwriteUrl);  // Debugging check
+console.log("Project ID:", conf.appwriteProjectId);  // Debugging check
 export default conf;

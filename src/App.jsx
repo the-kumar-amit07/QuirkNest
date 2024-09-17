@@ -34,7 +34,7 @@ function App() {
         <div className='fixed md:static bg-white w-full'>
           <Navbar/>
           <main>
-            {/* <Outlet/> */}
+            <Outlet/>
           </main>
           <Footer/>
         </div>

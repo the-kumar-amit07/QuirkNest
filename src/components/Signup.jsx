@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import authService from "../appwrite/auth";
+import authService from "../appwrite/auth.js";
 import { login } from "../store/authSlice";
 import { Button, Input } from "./index";
 import Logo  from "../assets/Logo.jpg";
@@ -16,10 +16,12 @@ function Signup() {
   const { register, handleSubmit } = useForm();
 
   const createAcc = async (data) => {
+    console.log("this is user data:",data);
+    
     setError("");
     try {
-      const sessionData = await authService.createAccount(data);
-      if (sessionData) {
+      const userData = await authService.createAccount(data);
+      if (userData) {
         const userData = await authService.getCurrentUser();
         if (userData) {
           dispatch(login(userData));
@@ -51,7 +53,7 @@ function Signup() {
           </p>
           <form onSubmit={handleSubmit(createAcc)} className="mt-8">
             <div className="space-y-5">
-              <div>
+            
                 <Input
                   label="Full Name"
                   placeholder="Enter Your Full Name"
@@ -59,8 +61,8 @@ function Signup() {
                     required: true,
                   })}
                 />
-              </div>
-              <div>
+              
+            
                 <Input
                   label="Email"
                   placeholder="Enter Your Email address"
@@ -74,8 +76,8 @@ function Signup() {
                     },
                   })}
                 />
-              </div>
-              <div>
+              
+            
                 <Input
                   label="Password"
                   type="password"
@@ -84,15 +86,15 @@ function Signup() {
                     required: true,
                   })}
                 />
-              </div>
-              <div>
+              
+            
                 <Button
                   type="submit"
                   className="inline-flex w-full items-center justify-center rounded-md bg-purple-950 px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-purple-600"
                 >
                   Create Account <ArrowRight className="ml-2" size={16} />
                 </Button>
-              </div>
+              
             </div>
           </form>
         </div>
