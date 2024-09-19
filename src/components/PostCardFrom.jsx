@@ -33,7 +33,7 @@ function PostCardFrom({ post }) {
         }
         const dbPost = await service.updatePost(post.$id, {
           ...data,
-          featuredImage: imgFile ? imgFile.$id : undefined,
+          featuredImage: imgFile ? imgFile.$id : post.featuredImage,
         });
         if (dbPost) {
           navigate(`/post/${dbPost.$id}`);
@@ -41,27 +41,27 @@ function PostCardFrom({ post }) {
       } else {
         //creating a post
 
-        //normal approach
+        // normal approach
         // const imgFile = data.image[0] ? await service.uploadFile(data.image[0]) : null
-        // const dbPost = await service.createPost({
-        //     ...data,
-        //     userId : userData.$id
-        //     featuredImage : imgFile ? imgFile.$id: undefined
-        // })
-        // if (dbPost) {
-        //     navigate(`/post/${dbPost.$id}`
-        // }
+        const dbPost = await service.createPost({
+            ...data,
+            userId : userData.$id,
+            featuredImage : imgFile ? imgFile.$id: undefined
+        })
+        if (dbPost) {
+            navigate(`/post/${dbPost.$id}`)
+        }
 
         //my approach
-        const newPost = {
-          ...data,
-          userId: userData.$id,
-          featuredImage: imgFile ? imgFile.$id : undefined,
-        };
-        const dbPost = await service.createPost(newPost);
-        if (dbPost) {
-          navigate(`/post/${dbPost.$id}`);
-        }
+        // const newPost = {
+        //   ...data,
+        //   userId: userData.$id,
+        //   featuredImage: imgFile ? imgFile.$id : undefined,
+        // };
+        // const dbPost = await service.createPost(newPost);
+        // if (dbPost) {
+        //   navigate(`/post/${dbPost.$id}`);
+        // }
       }
     } catch (error) {
       console.log("error submitting post", error);
@@ -127,7 +127,7 @@ function PostCardFrom({ post }) {
           accept="image/png, image/jpg, image/jpeg, image/gif"
           {...register("image", { required: !post })}
         />
-        {post && (
+        {post && post.featuredImage && (
           <div className="w-full mb-4">
             <img
               src={service.getFilePreview(post.featuredImage)}

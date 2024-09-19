@@ -7,11 +7,16 @@ import { Link } from 'react-router-dom'
 
 function PostCard({
     $id,title,featuredImage
-})  {
+}) {
+  if (!featuredImage) {
+    console.error("Error: Missing featuredImage fileId");
+    return <div>Error: No image available for this post</div>;
+  }
+
     return (
       <div className="w-[300px] rounded-md border">
         <img
-          src={appwriteServices.getFilePreview(featuredImage)}
+          src={featuredImage ? appwriteServices.getFilePreview(featuredImage) : "path-to-placeholder.jpg"}
           alt= {title}
           className="h-[200px] w-full rounded-t-md object-cover"
         />

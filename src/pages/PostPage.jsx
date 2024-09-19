@@ -9,7 +9,7 @@ import parse from "html-react-parser";
 
 
 function PostPage() {
-    const [post, setPost] = useState([])
+    const [post, setPost] = useState(null)
     const { slug } = useParams()
     const navigate = useNavigate()
 
