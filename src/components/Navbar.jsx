@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Menu, X ,CircleUserRound} from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.jpg";
 import { useSelector } from "react-redux";
@@ -19,194 +19,152 @@ function Navbar() {
 
   const handleClick = (section) => {
     if (section === "userProfile") {
-      setIsProfileOpen(!isProfileOpen); //Toggle the user profile popup
+      setIsProfileOpen(!isProfileOpen);
     }
   };
 
   const menuItems = [
-    {
-      name: "Home",
-      slug: "/",
-      active: true,
-    },
-    {
-      name: "About",
-      slug: "/about",
-      active: authStatus,
-    },
-    {
-      name: "Post",
-      slug: "/all-post",
-      active: authStatus,
-    },
-    {
-      name: "Add Post",
-      slug: "/add-post",
-      active: authStatus,
-    },
+    { name: "Home", slug: "/", active: true },
+    { name: "About Us", slug: "/about-us", active: authStatus },
+    { name: "All Post", slug: "/all-post", active: authStatus },
+    { name: "Add Post", slug: "/add-post", active: authStatus },
   ];
 
   const authMenuItems = [
-    {
-      name: "LogIn",
-      slug: "/login",
-      active: !authStatus,
-    },
-    {
-      name: "SignUp",
-      slug: "/signup",
-      active: !authStatus,
-    },
+    { name: "LogIn", slug: "/login", active: !authStatus },
+    { name: "SignUp", slug: "/signup", active: !authStatus },
   ];
 
   return (
-    <div className="relative w-full bg-white">
-      <div className="mx-auto flex items-center justify-between px-4 py-2 sm:px-6 lg:px-4">
-        <div className="inline-flex items-center space-x-2">
-          <Link to="/">
-            <img src={Logo} alt="" className="rounded-sm h-32 w-32" />
-          </Link>
-        </div>
+    <div className="relative w-full bg-white shadow-sm">
+      <div className="mx-auto flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        {/* Logo Section */}
+        <Link to="/" className="flex items-center">
+          <img src={Logo} alt="Logo" className="h-10 w-20 object-fill" />
+        </Link>
 
-        {/* Menu Items for Large Screens */}
-        <div className="hidden lg:block">
-          <ul className="ml-12 inline-flex space-x-8">
-            {menuItems.map((item) =>
-              item.active ? (
-                <li key={item.name}>
-                  <button
-                    onClick={() => navigate(item.slug)}
-                    className="inline-flex items-center text-sm font-semibold text-gray-800 hover:text-gray-900"
-                  >
-                    {item.name}
-                    {/* <span>
-                        <ChevronDown className="ml-2 h-4 w-4" />
-                      </span> */}
-                  </button>
-                </li>
-              ) : null
-            )}
-          </ul>
-        </div>
-
-        {/* Search Input */}
-        <div className="flex grow justify-end">
-          <input
-            className="flex h-10 w-[250px] rounded-md bg-gray-100 px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-            type="text"
-            placeholder="Serach"
-          ></input>
-        </div>
-
-        {/* Authenticated User Profile or Auth Menu */}
-        <div className="ml-2 mt-2 hidden lg:block">
-          {authStatus ? (
-            <div
-              className="flex items-center gap-2 cursor-pointer p-1 hover:bg-gray-500 rounded-lg"
-              onClick={() => handleClick("userProfile")}
-            >
-              <img
-                src=""
-                alt="user avatar"
-                className="rounded-full w-32 h-32 object-cover"
-              />
-              <p>
-                <span className="text-gray-400 text-14">Hi,</span> {""}
-                <span className="text-gray-400 font-bold ml-1 text-14">
-                  Amit
-                </span>{" "}
-                {/* Replace 'Amit' with dynamic user name */}
-              </p>
-            </div>
-          ) : (
-            <div className="flex space-x-4">
-              {authMenuItems.map(
-                (item) =>
-                  item.active && (
-                    <Button
-                      key={item.name}
-                      onClick={() => navigate(item.slug)}
-                      className="text-sm font-semibold"
-                    >
-                      {item.name}
-                    </Button>
-                  )
-              )}
-            </div>
+        {/* Large Screen Menu */}
+        <div className="hidden lg:flex items-center space-x-8">
+          {menuItems.map((item) =>
+            item.active ? (
+              <button
+                key={item.name}
+                onClick={() => navigate(item.slug)}
+                className="text-base font-medium text-gray-700 hover:text-purple-900 transition"
+              >
+                {item.name}
+              </button>
+            ) : null
           )}
         </div>
 
-        {/* Mobile Menu Icon */}
-        <div className="ml-2 lg:hidden">
-          <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
+        {/* Search Bar */}
+        <div className="hidden lg:block w-[300px]">
+          <input
+            type="text"
+            placeholder="Search"
+            className="w-full h-10 px-4 py-2 text-sm bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-900"
+          />
         </div>
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="absolute inset-x-0 top-0 z-50 origin-top-right transform p-2 transition lg:hidden">
-            <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-              <div className="px-5 pb-6 pt-5">
-                <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center space-x-2">
-                    <Link to="/">
-                      <img src={Logo} alt="" className="rounded-sm h-32 w-32" />
-                    </Link>
-                  </div>
-                  <div className="-mr-2">
-                    <button
-                      type="button"
-                      onClick={toggleMenu}
-                      className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                    >
-                      <span className="sr-only">Close menu</span>
-                      <X className="h-6 w-6" aria-hidden="true" />
-                    </button>
-                  </div>
-                </div>
-                <div className="mt-6">
-                  <nav className="grid gap-y-4">
-                    {menuItems.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.slug}
-                        className="-m-3 flex items-center rounded-md p-3 text-sm font-semibold hover:bg-gray-50"
-                      >
-                        <button
-                          onClick={() => navigate(item.slug)}
-                          className="ml-3 text-base font-medium text-gray-900"
-                        >
-                          {item.name}
-                        </button>
-                        {/* <span>
-                              <ChevronRight className="ml-3 h-4 w-4" />
-                            </span> */}
-                      </Link>
-                    ))}
-                  </nav>
-                </div>
-                <div className="ml-3 mt-4 flex items-center space-x-2">
-                  <img
-                    className="inline-block h-10 w-10 rounded-full"
-                    src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
-                    alt="Dan_Abromov"
-                  />
-                  <span className="flex flex-col">
-                    <span className="text-sm font-medium text-gray-900">
-                      Dan Abromov
-                    </span>
-                    <span className="text-sm font-medium text-gray-500">
-                      @dan_abromov
-                    </span>
-                  </span>
-                </div>
-              </div>
+
+        {/* Auth Section */}
+        <div className="hidden lg:flex items-center space-x-6">
+          {authStatus ? (
+            <div
+              className="flex items-center space-x-2 cursor-pointer"
+              onClick={() => handleClick("userProfile")}
+            >
+              <CircleUserRound
+                className="h-10 w-10 rounded-full object-cover hover:text-purple-900"
+              />
+              <span className="text-sm text-gray-700 font-medium">
+                Hi, Amit
+              </span>{" "}
+              {/* Replace 'Amit' dynamically */}
             </div>
-          </div>
-        )}
-        {/* User Profile Popup */}
-        {isProfileOpen && (
-          <UserProfile onclose={() => setIsProfileOpen(false)} />
-        )}
+          ) : (
+            authMenuItems.map(
+              (item) =>
+                item.active && (
+                  <Button key={item.name} onClick={() => navigate(item.slug)}>
+                    {item.name}
+                  </Button>
+                )
+            )
+          )}
+        </div>
+
+        {/* Mobile Menu Toggle */}
+        <div className="lg:hidden z-50">
+          {isMenuOpen ? (
+            <X
+              onClick={toggleMenu}
+              className="h-6 w-6 cursor-pointer text-gray-800"
+            />
+          ) : (
+            <Menu
+              onClick={toggleMenu}
+              className="h-6 w-6 cursor-pointer text-gray-800"
+            />
+          )}
+        </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="lg:hidden absolute top-0 inset-x-0 z-40 bg-white p-4 shadow-lg rounded-lg">
+          <nav className="space-y-4">
+            {menuItems.map((item) => (
+              <button
+                key={item.name}
+                onClick={() => {
+                  toggleMenu();
+                  navigate(item.slug);
+                }}
+                className="w-full text-left text-base font-medium text-gray-700 hover:text-black"
+              >
+                {item.name}
+              </button>
+            ))}
+          </nav>
+          <div className="mt-6">
+            {authStatus ? (
+              <div
+                className="flex items-center space-x-2 cursor-pointer"
+                onClick={() => handleClick("userProfile")}
+              >
+                <CircleUserRound
+                  className="h-10 w-10 rounded-full object-cover"
+                />
+                <span className="text-sm text-gray-700 font-medium">
+                  Hi, Amit
+                </span>
+              </div>
+            ) : (
+              <div className="flex flex-col space-y-4">
+                {authMenuItems.map(
+                  (item) =>
+                    item.active && (
+                      <Button
+                        key={item.name}
+                        onClick={() => {
+                          toggleMenu();
+                          navigate(item.slug);
+                        }}
+                        className="w-full"
+                      >
+                        {item.name}
+                      </Button>
+                    )
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* User Profile Popup */}
+      {isProfileOpen && <UserProfile onclose={() => setIsProfileOpen(false)} />}
     </div>
   );
 }

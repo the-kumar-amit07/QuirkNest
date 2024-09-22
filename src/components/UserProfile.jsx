@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { UserPen,Inbox,FileImage,CircleX } from 'lucide-react';
+import { UserPen,Inbox,FileImage,CircleX,CircleUserRound } from 'lucide-react';
 import { Button } from './index'
 import { useDispatch } from 'react-redux';
 import authService from '../appwrite/auth'
@@ -46,51 +46,53 @@ const UserProfile = ({ onclose }) => {
 
   
   return (
-    <div className='nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96 shadow-xl '>
+    <div className='nav-item absolute right-1 top-16 bg-white p-8 rounded-lg w-96 shadow-xl '>
       <div className='flex justify-between items-center'>
-        <p className='font-semibold text-lg dark:text-gray-200'>User Profile</p>
+        <p className='font-semibold text-lg'>User Profile</p>
         <Button 
-        color='rgb(153,171,180)'
-        bgHoverColor='light-gray'
-        size='2xl'
-        borderRadius='50%'
-        onClick={onclose}
-        icon = {<CircleX />}
-        />
+          textColor='text-black'
+          size='2xl'
+          onClick={onclose}
+          className='bg-white'
+        >
+          <CircleX />
+        </Button>
+
       </div>
       <div className='flex gap-5 items-center mt-6 border-color border-b-1 pb-6'>
-        <img className='rounded-full h-20 w-20'  alt="user-profile" />
+        <CircleUserRound className='rounded-full h-20 w-20'  alt="user-profile" />
       <div>
-        <p className='font-semibold text-xl dark:text-gray-200'>Amit Kumar Marndi</p>
-        <p className='text-gray-500 text-sm dark:text-gray-400'>Developer</p> 
+        <p className='font-semibold text-xl '>Amit Kumar Marndi</p>
+        <p className='text-gray-500 text-sm '>Developer</p> 
       </div>
     </div>
     <div>
       {userProfileData.map((item,index) => (
         <div key={index} 
-          className='flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer dark:hover:bg-[#42464D]' >
+          className='flex gap-5 border-b-1 border-color p-4 hover:bg-purple-300 cursor-pointer' >
           <button 
           type='button'
           style={{color:item.iconColor,backgroundColor:item.iconBg}}
-          className='text-xl rounded-lg p-3 hover:bg-light-gray'>
+          className='text-xl rounded-lg p-3 hover:bg-purple-300'>
             {item.icon}
           </button>    
           <div>
-            <p className='font-semibold dark:text-gray-200'>{item.title}</p>
-            <p className='text-gray-500 text-sm dark:text-gray-400'>{item.desc}</p>
+            <p className='font-semibold'>{item.title}</p>
+            <p className='text-gray-500 text-sm'>{item.desc}</p>
           </div>
         </div>
       ))}
     </div>
     <div className='mt-5' >
       <Button
-      color= 'white'
-      bgColor= 'purple'
-      text= 'Logout'
-      borderRadius='10px'
+      // textColor= 'white'
+      // bgColor= 'bg-purple-'
       width='full'
       onClick={handleLogout}
-      />
+      className="text-sm font-semibold bg-purple-600 w-full"
+        >
+          Logout
+      </Button>
     </div>
     </div>
   

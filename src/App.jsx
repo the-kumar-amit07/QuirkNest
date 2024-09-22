@@ -30,15 +30,15 @@ function App() {
   
   return !loading ? (
     <>
-      <div className=' flex relative'>
-        <div className='fixed md:static bg-white w-full'>
-          <Navbar/>
-          <main>
-            <Outlet/>
-          </main>
-          <Footer/>
-        </div>
+      <div className='flex flex-col min-h-screen'>
+      <div className='fixed w-full bg-white z-50'>
+        <Navbar />
       </div>
+      <main className='flex-grow mt-16'> {/* Add margin-top to avoid overlap with navbar */}
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
     </>
   ) : null
 }

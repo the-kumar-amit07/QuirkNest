@@ -1,0 +1,25 @@
+.nav-item,
+.navbar {
+    z-index: 10000;
+}
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: rgb(216, 216, 216);
+        border-radius: 40px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    
+/* Allowing overflow on mobile devices */
+html, body {
+    height: 100%;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+main {
+    overflow-y: auto; /* Allow vertical scrolling */
+    padding: 16px; /* Adjust padding as needed */
+}
