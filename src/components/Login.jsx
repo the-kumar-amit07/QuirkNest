@@ -34,9 +34,9 @@ function Login() {
   return (
     <section>
       <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
-        <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
+        <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md border rounded-lg p-8 shadow-xl">
           <div className="mb-2 flex justify-center">
-            <img src={Logo} alt="logo" className="rounded-sm h-52 w-56" />
+            <img src={Logo} alt="logo" className="rounded-sm h-24 w-48" />
           </div>
           <h2 className="text-center text-2xl font-bold leading-tight text-black">
             Sign in to your account
@@ -53,7 +53,7 @@ function Login() {
           {error && <p className="text-red-600 text-center">{error}</p>}
           <form onSubmit={handleSubmit(login)} className="mt-8">
             <div className="space-y-5">
-              <div>
+              <div >
                 <Input
                   label="Email address"
                   placeholder="Enter your email address"
@@ -82,7 +82,7 @@ function Login() {
               <div>
                 <Button
                   type="submit"
-                  className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+                  className="inline-flex w-full items-center justify-center rounded-md bg-purple-800 px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-purple-900"
                 >
                   Get started <ArrowRight className="ml-2" size={16} />
                 </Button>

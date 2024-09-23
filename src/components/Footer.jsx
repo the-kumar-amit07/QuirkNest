@@ -17,22 +17,22 @@ function Footer() {
                     <div className="p-4">
                         <ul className="flex space-x-4">
                             <li>
-                                <Link className="font-medium text-gray-600 hover:text-gray-800" to="/privacy-policy">
+                                <Link className="font-medium text-gray-600 hover:text-purple-900" to="">
                                     Privacy Policy
                                 </Link>
                             </li>
                             <li>
-                                <Link className="font-medium text-gray-600 hover:text-gray-800" to="/terms-of-service">
+                                <Link className="font-medium text-gray-600 hover:text-purple-900" to="">
                                     Terms of Service
                                 </Link>
                             </li>
                             <li>
-                                <Link className="font-medium text-gray-600 hover:text-gray-800" to="/return-policy">
+                                <Link className="font-medium text-gray-600 hover:text-purple-900" to="">
                                     Return Policy
                                 </Link>
                             </li>
                             <li>
-                                <Link className="font-medium text-gray-600 hover:text-gray-800" to="/contact-us">
+                                <Link className="font-medium text-gray-600 hover:text-purple-900" to="">
                                     Contact Us
                                 </Link>
                             </li>
@@ -41,19 +41,19 @@ function Footer() {
                     <div className="p-4">
                         <div className="flex space-x-2">
                             <Link to="#">
-                                <div className="flex items-center justify-center w-8 h-8  rounded-full hover:border-gray-400">
+                                <div className="flex items-center justify-center w-8 h-8  rounded-full hover:border-purple-800">
                                     {/* Social icon SVG */}
                                     <Instagram className='rounded-full object-cover' />
                                 </div>
                             </Link>
                             <Link to="#">
-                                <div className="flex items-center justify-center w-8 h-8  rounded-full hover:border-gray-400">
+                                <div className="flex items-center justify-center w-8 h-8  rounded-full hover:border-purple-800">
                                     {/* Social icon SVG */}
                                     <Twitter className='rounded-full object-cover'/>
                                 </div>
                             </Link>
                             <Link to="#">
-                                <div className="flex items-center justify-center w-8 h-8  rounded-full hover:border-gray-400">
+                                <div className="flex items-center justify-center w-8 h-8  rounded-full hover:border-purple-800">
                                     {/* Social icon SVG */}
                                     <Facebook className='rounded-full object-cover'/>
                                 </div>

@@ -21,11 +21,11 @@ function HomePage() {
         <div className='w-full py-8 bg-gray-50'>
             {/* Animated Banner */}
             <div className='relative bg-gradient-to-r from-purple-600 to-purple-800 py-24 text-white mb-8 overflow-hidden'>
-                <div className='container mx-auto px-4 md:px-8 flex flex-col lg:flex-row items-center justify-between'>
+                <div className='container mx-auto px-2 md:px-8 flex flex-col lg:flex-row items-center justify-between'>
                     <div className='w-full lg:w-1/2'>
                         <h1 className='text-4xl lg:text-5xl font-bold mb-4 animate-fade-in-up'>Welcome to Our Blog</h1>
                         <p className='text-lg mb-6 animate-fade-in-up animation-delay-1'>Discover a wide range of insightful posts and stories.</p>
-                        <Link to='/post' className='bg-white text-purple-700 px-6 py-3 rounded-full font-semibold hover:bg-purple-100 transition-all duration-300 animate-fade-in-up animation-delay-2'>
+                        <Link to='/post' className='bg-white text-purple-700 px-6 py-3 rounded-lg font-semibold hover:bg-purple-100 transition-all duration-300 animate-fade-in-up animation-delay-2'>
                             Get Started
                         </Link>
                     </div>

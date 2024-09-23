@@ -25,7 +25,7 @@ function Navbar() {
 
   const menuItems = [
     { name: "Home", slug: "/", active: true },
-    { name: "About Us", slug: "/about-us", active: authStatus },
+    { name: "About Us", slug: "/about-us", active: true},
     { name: "All Post", slug: "/all-post", active: authStatus },
     { name: "Add Post", slug: "/add-post", active: authStatus },
   ];
@@ -86,7 +86,10 @@ function Navbar() {
             authMenuItems.map(
               (item) =>
                 item.active && (
-                  <Button key={item.name} onClick={() => navigate(item.slug)}>
+                  <Button
+                    className="text-white bg-purple-800 hover:bg-purple-900"
+                    key={item.name}
+                    onClick={() => navigate(item.slug)}>
                     {item.name}
                   </Button>
                 )

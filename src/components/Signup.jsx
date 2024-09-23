@@ -35,9 +35,9 @@ function Signup() {
   return (
     <section>
       <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
-        <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
+        <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md border rounded-lg p-8 shadow-xl">
           <div className="mb-2 flex justify-center">
-            <img src={Logo} alt="logo" className="rounded-md h-52 w-52" />
+            <img src={Logo} alt="logo" className="rounded-md h-24 w-48" />
           </div>
           <h2 className="text-center text-2xl font-bold leading-tight text-black">
             Sign up to create account
@@ -52,7 +52,7 @@ function Signup() {
             </Link>
           </p>
           <form onSubmit={handleSubmit(createAcc)} className="mt-8">
-            <div className="space-y-5">
+            <div className="space-y-5 ">
             
                 <Input
                   label="Full Name"
@@ -65,7 +65,7 @@ function Signup() {
             
                 <Input
                   label="Email"
-                  placeholder="Enter Your Email address"
+                  placeholder="Enter Your Email Address"
                   {...register("email", {
                     required: true,
                     validate: {
@@ -90,7 +90,7 @@ function Signup() {
             
                 <Button
                   type="submit"
-                  className="inline-flex w-full items-center justify-center rounded-md bg-purple-950 px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-purple-600"
+                  className="inline-flex w-full items-center justify-center rounded-md bg-purple-800 px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-purple-900"
                 >
                   Create Account <ArrowRight className="ml-2" size={16} />
                 </Button>

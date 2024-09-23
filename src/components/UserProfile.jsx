@@ -89,7 +89,7 @@ const UserProfile = ({ onclose }) => {
       // bgColor= 'bg-purple-'
       width='full'
       onClick={handleLogout}
-      className="text-sm font-semibold bg-purple-600 w-full"
+      className="text-sm font-semibold bg-purple-800 hover:bg-purple-900 w-full"
         >
           Logout
       </Button>
