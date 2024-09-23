@@ -25,7 +25,7 @@ function HomePage() {
                     <div className='w-full lg:w-1/2'>
                         <h1 className='text-4xl lg:text-5xl font-bold mb-4 animate-fade-in-up'>Welcome to Our Blog</h1>
                         <p className='text-lg mb-6 animate-fade-in-up animation-delay-1'>Discover a wide range of insightful posts and stories.</p>
-                        <Link to='/post' className='bg-white text-purple-700 px-6 py-3 rounded-lg font-semibold hover:bg-purple-100 transition-all duration-300 animate-fade-in-up animation-delay-2'>
+                        <Link to='/add-post' className='bg-white text-purple-700 px-6 py-3 rounded-lg font-semibold hover:bg-purple-100 transition-all duration-300 animate-fade-in-up animation-delay-2'>
                             Get Started
                         </Link>
                     </div>
