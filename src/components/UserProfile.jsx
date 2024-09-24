@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import { UserPen,Inbox,FileImage,CircleX,CircleUserRound } from 'lucide-react';
 import { Button } from './index'
 import { useDispatch } from 'react-redux';
@@ -13,6 +13,7 @@ import { logout } from '../store/authSlice';
 const UserProfile = ({ onclose }) => {
   
   const dispatch = useDispatch()
+  const [userName,setUserName] = useState('')
 
   const userProfileData = [
     {
@@ -37,10 +38,26 @@ const UserProfile = ({ onclose }) => {
         iconBg: "rgb(254, 201, 15)",
     },
   ];
+
+  useEffect(() => {
+    const userDetail = async () => {
+      try {
+        const user = await authService.getCurrentUser()
+          if (user) {
+            setUserName(user.name)
+          }
+        } catch (error) {
+          console.error(error)
+        }
+    }
+    userDetail();
+  }, [])
+  
   
   const handleLogout = () => {
     authService.logOut().then(() => {
       dispatch(logout())
+      onclose()
     })
   }
 
@@ -62,7 +79,7 @@ const UserProfile = ({ onclose }) => {
       <div className='flex gap-5 items-center mt-6 border-color border-b-1 pb-6'>
         <CircleUserRound className='rounded-full h-20 w-20'  alt="user-profile" />
       <div>
-        <p className='font-semibold text-xl '>Amit Kumar Marndi</p>
+        <p className='font-semibold text-xl '>{userName ? userName : 'Guest'}</p>
         <p className='text-gray-500 text-sm '>Developer</p> 
       </div>
     </div>
