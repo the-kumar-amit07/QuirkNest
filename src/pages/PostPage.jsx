@@ -43,7 +43,7 @@ function PostPage() {
         <div className='py-8 bg-gray-50'>
             <Container>
                 {/* Post Image Section */}
-                <div className='w-full flex justify-center mb-6 relative border border-gray-200 rounded-lg overflow-hidden shadow-md'>
+                <div className='w-full  flex justify-center mb-6 relative border border-gray-200 rounded-lg overflow-hidden shadow-md'>
                     <img
                         src={appwriteServices.getFilePreview(post.featuredImage)}
                         alt={post.title}
