@@ -152,7 +152,7 @@ function PostCardFrom({ post }) {
               post ? "bg-green-500 hover:bg-green-600" : "bg-purple-500 hover:bg-purple-600"
             }`}
           >
-            {post ? "Update Post" : "Submit Post"}
+            {post ? "Update" : "Create"}
           </Button>
         </div>
       </div>
