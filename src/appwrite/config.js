@@ -1,6 +1,6 @@
 
 import conf from '../conf/conf.js'
-import { Client,ID,Databases,Storage,Query } from 'appwrite'
+import { Client,ID,Databases,Storage,Query} from 'appwrite'
 
 export class Service{
     client = new Client();
@@ -90,6 +90,33 @@ export class Service{
             console.log(`Appwrite::getAllPost::error::${error}`);
         }
     }
+    //get posts by logeed user
+    async getUserPosts(userId, queries = [Query.equal("status","active"),Query.equal("userId",userId)]) {
+        try {
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                queries,
+            )
+        } catch (error) {
+            console.log(`Appwrite::getUserPosts::error::${error}`);
+        }
+    }
+
+    // //get user from Document
+    // async getPostUser(userId) {
+    //     try {
+    //         return await this.databases.getDocument(
+    //             conf.appwriteDatabaseId,
+    //             conf.appwriteCollectionId,
+    //             userId,
+    //         )
+    //     } catch (error) {
+    //         console.log(`Appwrite::getPostUser::error::${error}`);
+    //         return null;
+    //     }
+    // }
+
     //fileUpload
     async uploadFile (file) {
         try {

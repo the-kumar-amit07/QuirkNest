@@ -2,17 +2,22 @@
 import React, { useEffect, useState } from 'react';
 import appwriteServices from '../appwrite/config';
 import { Container, PostCard } from '../components';
+import authService from '../appwrite/auth';
+import Masonry from 'react-masonry-css';
 
 function AllPostPage() {
   const [posts, setPosts] = useState([]);
+  const [userId,setUserId] = useState('')
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await appwriteServices.getAllPosts();
-        if (response) {
-          setPosts(response.documents);
+        const user = await authService.getCurrentUser();
+        if (user) {
+          setUserId(user.$id)
+          const userPosts = await appwriteServices.getUserPosts(user.$id)
+          setPosts(userPosts.documents)
         }
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -24,25 +29,38 @@ function AllPostPage() {
     fetchPosts();
   }, []);
 
+  // Define the breakpoint columns for the Masonry layout
+  const breakpointColumnsObj = {
+    default: 5,
+    1100: 4,
+    800: 3,
+    600: 2,
+    400: 1
+};
+
   return (
-    <div className='w-full py-8 '>
+    <div className='w-full py-8  bg-gray-50 '>
       <Container>
         {loading ? (
           <div className='text-center py-10'>
             <h2 className='text-xl font-semibold text-gray-700'>Loading posts...</h2>
           </div>
         ) : (
-          <div className='flex flex-wrap justify-center'>
+            <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className='my-masonry-grid'
+              columnClassName="my-masonry-grid_column"
+            >
             {posts.length === 0 ? (
               <h2 className='text-xl font-semibold text-gray-700'>No posts available</h2>
             ) : (
               posts.map((post) => (
-                <div key={post.$id} className='p-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4'>
-                  <PostCard {...post} className="transition-transform duration-300 hover:scale-105" />
+                <div key={post.$id} className='mb-6 break-inside-avoid'>
+                  <PostCard {...post} className="rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300" />
                 </div>
               ))
             )}
-          </div>
+          </Masonry>
         )}
       </Container>
     </div>

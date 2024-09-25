@@ -6,34 +6,35 @@ import appwriteServices from "../appwrite/config"
 import { Link } from 'react-router-dom'
 
 function PostCard({
-    $id,title,featuredImage
+    $id, title, featuredImage
 }) {
   if (!featuredImage) {
     console.error("Error: Missing featuredImage fileId");
     return <div>Error: No image available for this post</div>;
   }
 
-    return (
-      <div className="w-[300px] rounded-md border">
-        <img
-          src={featuredImage ? appwriteServices.getFilePreview(featuredImage) : "path-to-placeholder.jpg"}
-          alt= {title}
-          className="h-[200px] w-full rounded-t-md object-cover"
-        />
-        <div className="p-4">
-          <h1 className="inline-flex items-center text-lg font-semibold">
-            {title} &nbsp; <ArrowUpRight className="h-4 w-4" />
-          </h1>
-         
-         <Link to={`/post/${$id}`}>
-         <button
+  return (
+    <div className="rounded-lg overflow-hidden bg-white shadow-md hover:shadow-lg transition-shadow duration-300">
+      <img
+        src={featuredImage ? appwriteServices.getFilePreview(featuredImage) : "path-to-placeholder.jpg"}
+        alt={title}
+        className="w-full h-auto object-cover"
+      />
+      <div className="p-4">
+        <h1 className="text-lg font-semibold text-gray-800 mb-2 flex items-center">
+          {title} <ArrowUpRight className="ml-2 h-5 w-5 text-gray-500" />
+        </h1>
+        <Link to={`/post/${$id}`}>
+          <button
             type="button"
-            className="mt-4 w-full rounded-lg bg-purple-700 px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            className="w-full rounded-md bg-purple-700 px-3 py-2 text-sm font-semibold text-white hover:bg-purple-800 transition-colors"
           >
-            Read
-          </button></Link>
-        </div>
+            Read More
+          </button>
+        </Link>
       </div>
-    )
-  }
-export default PostCard
+    </div>
+  );
+}
+
+export default PostCard;

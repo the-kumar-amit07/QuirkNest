@@ -23,3 +23,20 @@ main {
     overflow-y: auto; /* Allow vertical scrolling */
     padding: 16px; /* Adjust padding as needed */
 }
+
+/* Custom styles for Masonry layout */
+    .my-masonry-grid {
+        display: flex;
+        margin-left: -30px; /* Align items with the container */
+        width: auto;
+    }
+    
+    .my-masonry-grid_column {
+        padding-left: 30px; /* Space between columns */
+        background-clip: padding-box;
+    }
+    
+    /* Optional: Styling for Masonry items */
+    .my-masonry-grid_column > div {
+        margin-bottom: 30px;
+    }

@@ -13,7 +13,8 @@ import { logout } from '../store/authSlice';
 const UserProfile = ({ onclose }) => {
   
   const dispatch = useDispatch()
-  const [userName,setUserName] = useState('')
+  const [userName, setUserName] = useState('')
+  const [userMail,setUserMail] = useState('')
 
   const userProfileData = [
     {
@@ -45,6 +46,7 @@ const UserProfile = ({ onclose }) => {
         const user = await authService.getCurrentUser()
           if (user) {
             setUserName(user.name)
+            setUserMail(user.email)
           }
         } catch (error) {
           console.error(error)
@@ -80,7 +82,7 @@ const UserProfile = ({ onclose }) => {
         <CircleUserRound className='rounded-full h-20 w-20'  alt="user-profile" />
       <div>
         <p className='font-semibold text-xl '>{userName ? userName : 'Guest'}</p>
-        <p className='text-gray-500 text-sm '>Developer</p> 
+        <p className='text-gray-500 text-sm '>{userMail}</p> 
       </div>
     </div>
     <div>

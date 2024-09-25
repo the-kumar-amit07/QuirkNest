@@ -1,10 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
-import { Menu, X ,CircleUserRound} from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Menu, X ,CircleUserRound,Search} from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.jpg";
 import { useSelector } from "react-redux";
-import { Button, UserProfile } from "./index";
+import { Button, Input, UserProfile } from "./index";
+import authService from "../appwrite/auth";
+import { useForm } from "react-hook-form";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -12,6 +14,8 @@ function Navbar() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [userName, setUserName] = useState('')
+  const {register,handleSubmit} = useForm()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -23,11 +27,26 @@ function Navbar() {
     }
   };
 
+  useEffect(() => {
+    const name = async () => {
+      try {
+        const user = await authService.getCurrentUser()
+        if (user) {
+          const firstName = user.name.split(' ')[0]
+          setUserName(firstName)
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    name()
+  },[])
+
   const menuItems = [
     { name: "Home", slug: "/", active: true },
-    { name: "About Us", slug: "/about-us", active: true},
-    { name: "All Post", slug: "/all-post", active: authStatus },
-    { name: "Add Post", slug: "/add-post", active: authStatus },
+    { name: "Explore", slug: "/explore", active: true},
+    { name: "My Posts", slug: "/all-post", active: authStatus },
+    { name: "Create", slug: "/add-post", active: authStatus },
   ];
 
   const authMenuItems = [
@@ -39,8 +58,9 @@ function Navbar() {
     <div className="relative w-full bg-white shadow-sm">
       <div className="mx-auto flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         {/* Logo Section */}
-        <Link to="/" className="flex items-center">
-          <img src={Logo} alt="Logo" className="h-10 w-20 object-fill" />
+        <div  className="flex items-center justify-between space-x-8">
+        <Link to="/" className="flex items-center mt-1">
+          <img src={Logo} alt="Logo" className="h-14 w-28 object-fill" />
         </Link>
 
         {/* Large Screen Menu */}
@@ -57,15 +77,24 @@ function Navbar() {
             ) : null
           )}
         </div>
-
-        {/* Search Bar */}
-        <div className="hidden lg:block w-[300px]">
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-full h-10 px-4 py-2 text-sm bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-900"
-          />
         </div>
+
+    {/* Search Bar */}
+      <div className="hidden lg:flex items-center w-[500px]">
+        <form onSubmit={handleSubmit} className="flex w-full justify-between items-center space-x-2">
+          <Input
+            placeholder="Search"
+            className="w-full h-10 px-4 py-2 text-sm bg-gray-100 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-purple-900"
+              {...register("search",{required:true})}
+          />
+          <Button
+            type="submit"
+            className="bg-white  flex items-center justify-center rounded-r-lg  "
+          >
+            <Search className="h-8 w-8 object-cover text-gray-500 hover:text-purple-800" />
+          </Button>
+        </form>
+      </div> 
 
         {/* Auth Section */}
         <div className="hidden lg:flex items-center space-x-6">
@@ -78,7 +107,7 @@ function Navbar() {
                 className="h-10 w-10 rounded-full object-cover hover:text-purple-900"
               />
               <span className="text-sm text-gray-700 font-medium">
-                Hi, Amit
+                Hi, {userName ? userName : 'Guest'}
               </span>{" "}
               {/* Replace 'Amit' dynamically */}
             </div>
@@ -140,7 +169,7 @@ function Navbar() {
                   className="h-10 w-10 rounded-full object-cover"
                 />
                 <span className="text-sm text-gray-700 font-medium">
-                  Hi, Amit
+                  Hi, {userName ? userName : "Guest"}
                 </span>
               </div>
             ) : (
