@@ -5,12 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.jpg";
 import { useSelector } from "react-redux";
 import { Button, Input, UserProfile } from "./index";
-import authService from "../appwrite/auth";
+// import authService from "../appwrite/auth";
 import { useForm } from "react-hook-form";
 
 function Navbar() {
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status);
+  const userData = useSelector((state)=>state.auth.userData)
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -28,9 +29,10 @@ function Navbar() {
   };
 
   useEffect(() => {
-    const name = async () => {
+    const name = () => {
       try {
-        const user = await authService.getCurrentUser()
+        const user = userData
+        console.log("user : ",user)
         if (user) {
           const firstName = user.name.split(' ')[0]
           setUserName(firstName)
@@ -40,7 +42,23 @@ function Navbar() {
       }
     }
     name()
-  },[])
+  }, [userData])
+  
+
+  // useEffect(() => {
+  //   const name = async () => {
+  //     try {
+  //       const user = await authService.getCurrentUser()
+  //       if (user) {
+  //         const firstName = user.name.split(' ')[0]
+  //         setUserName(firstName)
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+  //   name()
+  // },[])
 
   const menuItems = [
     { name: "Home", slug: "/", active: true },

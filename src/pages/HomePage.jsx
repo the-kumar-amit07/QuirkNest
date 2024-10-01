@@ -29,7 +29,7 @@
                 <img
                 src={Banner}
                 alt="Blog Banner"
-                className="w-full h-auto object-contain rounded-md"
+                className="w-full h-auto object-contain rounded-md drop-shadow-md"
                 />
             </div>
             </div>
@@ -59,20 +59,20 @@
                 <img
                 src={Observation}
                 alt="Creative Features"
-                className="w-full h-auto object-cover rounded-md"
+                className="w-full h-auto object-cover rounded-md drop-shadow-md"
                 />
             </div>
             </div>
         </div>
 
         {/* Additional Features Section */}
-        <div className="w-full py-8 px-4 bg-gray-100 shadow-lg rounded-lg mb-8">
+        <div className="w-full py-8 px-4 bg-white border-2 shadow-lg rounded-lg mb-8">
             <div className="py-16">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-800">
                 Our Features
             </h2>
             <div className="flex flex-col lg:flex-row justify-center items-center gap-8">
-                <div className="bg-white rounded-lg shadow-lg p-8 w-full sm:w-1/2 md:w-1/3">
+                <div className="bg-white rounded-lg border-2 shadow-lg p-8 w-full sm:w-1/2 md:w-1/3">
                 <h3 className="text-xl font-semibold text-purple-600 mb-4">
                     High-Quality Content
                 </h3>
@@ -81,7 +81,7 @@
                     topics.
                 </p>
                 </div>
-                <div className="bg-white rounded-lg shadow-lg p-8 w-full sm:w-1/2 md:w-1/3">
+                <div className="bg-white rounded-lg border-2  shadow-lg p-8 w-full sm:w-1/2 md:w-1/3">
                 <h3 className="text-xl font-semibold text-purple-600 mb-4">
                     Interactive Community
                 </h3>
@@ -90,7 +90,7 @@
                     community forum.
                 </p>
                 </div>
-                <div className="bg-white rounded-lg shadow-lg p-8 w-full sm:w-1/2 md:w-1/3">
+                <div className="bg-white rounded-lg border-2  shadow-lg p-8 w-full sm:w-1/2 md:w-1/3">
                 <h3 className="text-xl font-semibold text-purple-600 mb-4">
                     Personalized Experience
                 </h3>

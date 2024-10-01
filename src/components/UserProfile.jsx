@@ -3,7 +3,7 @@
 import React, { useState,useEffect } from 'react'
 import { UserPen,Inbox,FileImage,CircleX,CircleUserRound } from 'lucide-react';
 import { Button } from './index'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import authService from '../appwrite/auth'
 import { logout } from '../store/authSlice';
 // import avatar from '../data/avatar.jpeg'
@@ -13,8 +13,10 @@ import { logout } from '../store/authSlice';
 const UserProfile = ({ onclose }) => {
   
   const dispatch = useDispatch()
+  const userData = useSelector((state)=> state.auth.userData)
   const [userName, setUserName] = useState('')
-  const [userMail,setUserMail] = useState('')
+  const [userMail, setUserMail] = useState('')
+  
 
   const userProfileData = [
     {
@@ -41,9 +43,9 @@ const UserProfile = ({ onclose }) => {
   ];
 
   useEffect(() => {
-    const userDetail = async () => {
+    const userDetail =  () => {
       try {
-        const user = await authService.getCurrentUser()
+        const user = userData
           if (user) {
             setUserName(user.name)
             setUserMail(user.email)
@@ -53,7 +55,7 @@ const UserProfile = ({ onclose }) => {
         }
     }
     userDetail();
-  }, [])
+  }, [userData])
   
   
   const handleLogout = () => {
