@@ -22,9 +22,10 @@ export default function Protected({
     },[authStatus,authentication,navigate])
     return (
     loader ? 
-    <div>
-        <Loading type = 'bars' colors= 'purple'/>
-    </div> : 
+            <div className='flex justify-center items-center h-screen'>
+                <Loading type='cubes' color='purple' />
+            </div>
+            : 
     <>{children}</>
     )
 }

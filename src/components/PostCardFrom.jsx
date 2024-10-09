@@ -120,7 +120,7 @@ function PostCardFrom({ post }) {
           <Input
             label="Upload Image"
             type="file"
-            className="w-full border border-gray-200 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-purple-600 transition-shadow"
+            className="w-full border items-center border-gray-200 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-purple-600 transition-shadow"
             accept="image/png, image/jpg, image/jpeg, image/gif"
             {...register("image", { required: !post })}
           />

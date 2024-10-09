@@ -37,8 +37,8 @@
         <div className='w-full py-8 bg-gray-50'>
         <Container>
             {loading ? (
-            <div className='flex justify-center items-center py-8'>
-                <Loading type='bars' color='purple' />
+            <div className='flex justify-center items-center h-screen'>
+                <Loading type='cubes' color='purple' />
             </div>
             ) : (
             <Masonry

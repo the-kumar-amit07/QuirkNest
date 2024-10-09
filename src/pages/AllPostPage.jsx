@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import appwriteServices from '../appwrite/config';
-import { Container, PostCard } from '../components';
+import { Container, PostCard, Loading} from '../components';
 import authService from '../appwrite/auth';
 import Masonry from 'react-masonry-css';
 
@@ -42,9 +42,9 @@ function AllPostPage() {
     <div className='w-full py-8  bg-gray-50 '>
       <Container>
         {loading ? (
-          <div className='text-center py-10'>
-            <h2 className='text-xl font-semibold text-gray-700'>Loading posts...</h2>
-          </div>
+          <div className='flex justify-center items-center h-screen'>
+          <Loading type='cubes' color='purple' />
+      </div>
         ) : (
             <Masonry
               breakpointCols={breakpointColumnsObj}
