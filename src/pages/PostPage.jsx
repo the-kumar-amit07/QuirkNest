@@ -16,9 +16,11 @@ function PostPage() {
 
     useEffect(() => {
         if (slug) {
+            console.log("slug name:",slug);
             appwriteServices.getPosts(slug)
                 .then((post) => {
                     if (post) {
+                        console.log(post.$id);
                         setPost(post);
                     } else {
                         navigate('/');
