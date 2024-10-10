@@ -23,22 +23,22 @@ const UserProfile = ({ onclose }) => {
         icon: <UserPen/>,
         title: "My Profile",
         desc: "Account Settings",
-        iconColor: "#03C9D7",
-        iconBg: "#E5FAFB",
+        iconColor: "purple",
+        iconBg: "none",
     },
     {
         icon: <Inbox />,
         title: "My Inbox",
         desc: "Messages & Emails",
-        iconColor: "rgb(0, 194, 146)",
-        iconBg: "rgb(235, 250, 242)",
+        iconColor: "purple",
+        iconBg: "none",
     },
     {
         icon: <FileImage />,
         title: "My Post",
         desc: "To-do and Daily Tasks",
-        iconColor: "rgb(255, 244, 229)",
-        iconBg: "rgb(254, 201, 15)",
+        iconColor: "purple",
+        iconBg: "none",
     },
   ];
 
@@ -90,11 +90,11 @@ const UserProfile = ({ onclose }) => {
     <div>
       {userProfileData.map((item,index) => (
         <div key={index} 
-          className='flex gap-5 border-b-1 border-color p-4 hover:bg-purple-300 cursor-pointer' >
+          className='flex gap-5 border-b-1 border-color p-4 rounded-md hover:bg-purple-400 hover:text-white cursor-pointer' >
           <button 
           type='button'
           style={{color:item.iconColor,backgroundColor:item.iconBg}}
-          className='text-xl rounded-lg p-3 hover:bg-purple-300'>
+          className='text-xl rounded-lg p-3'>
             {item.icon}
           </button>    
           <div>
