@@ -79,7 +79,7 @@ export class Service{
         }
     }
     //get all posts
-    async getAllPosts(queries = [Query.equal("status","active")]){
+    async getAllPosts(queries = [Query.equal("status","active"),Query.orderDesc('$createdAt')]){
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
@@ -91,7 +91,7 @@ export class Service{
         }
     }
     //get posts by logeed user
-    async getUserPosts(userId, queries = [Query.equal("status","active"),Query.equal("userId",userId)]) {
+    async getUserPosts(userId, queries = [Query.equal("status","active"),Query.equal("userId",userId),Query.orderDesc('$createdAt')]) {
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,

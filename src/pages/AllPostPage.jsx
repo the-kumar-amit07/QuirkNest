@@ -15,6 +15,7 @@ function AllPostPage() {
       try {
         const user = await authService.getCurrentUser();
         if (user) {
+          console.log('user:',user);
           setUserId(user.$id)
           const userPosts = await appwriteServices.getUserPosts(user.$id)
           setPosts(userPosts.documents)

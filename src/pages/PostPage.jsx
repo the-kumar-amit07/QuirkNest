@@ -8,11 +8,13 @@ import parse from 'html-react-parser';
 
 function PostPage() {
     const [post, setPost] = useState(null);
+    const [userName,setUserName] = useState('')
     const { slug } = useParams();
     const navigate = useNavigate();
 
     const userData = useSelector((state) => state.auth.userData);
     const isAuthor = post && userData ? post.userId === userData.$id : false;
+    
 
     useEffect(() => {
         if (slug) {
@@ -20,7 +22,7 @@ function PostPage() {
             appwriteServices.getPosts(slug)
                 .then((post) => {
                     if (post) {
-                        console.log(post.$id);
+                        console.log('post :',post.userId);
                         setPost(post);
                     } else {
                         navigate('/');
@@ -45,7 +47,8 @@ function PostPage() {
         <div className='py-8 bg-gray-50'>
             <Container>
                 {/* Post Image Section */}
-                <div className='w-full  flex justify-center mb-6 relative border border-gray-200 rounded-lg overflow-hidden shadow-md'>
+                <div className=''>
+                <div className='w-full flex justify-center mb-6 relative border border-gray-200 rounded-lg overflow-hidden shadow-md'>
                     <img
                         src={appwriteServices.getFilePreview(post.featuredImage)}
                         alt={post.title}
@@ -71,9 +74,11 @@ function PostPage() {
                         </div>
                     )}
                 </div>
+                </div>
                 {/* Post Title */}
                 <div className='w-full mb-4 text-center'>
                     <h1 className='text-4xl lg:text-5xl font-semibold text-purple-900'>{post.title}</h1>
+                    <h1>{userName}</h1>
                 </div>
                 {/* Post Content */}
                 <div className='prose prose-lg max-w-none text-gray-700 mx-auto'>
