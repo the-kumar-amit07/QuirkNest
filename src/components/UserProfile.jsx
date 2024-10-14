@@ -67,7 +67,9 @@ const UserProfile = ({ onclose }) => {
         info: "Logged Out successfully!",
       }
     ) .then(() => {
-      dispatch(logout())
+      setTimeout(() => {
+        dispatch(logout())
+      }, 100);
       onclose()
     })
   }
