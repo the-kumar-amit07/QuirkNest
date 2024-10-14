@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { CircleCheckBig,TriangleAlert,CircleX  } from 'lucide-react';
-import Button from './Button';
 
 const icons = {
     success: <CircleCheckBig />,
@@ -23,9 +22,11 @@ function Notification({
                 {/* messege */}
                 {message}
                 {/* closeButton */}
-                <Button className='flex items-center ml-5 cursor-pointer'>
-                    <CircleCheckBig />
-                </Button>
+                <CircleX
+                        color="white"
+                        className="closeBtn"
+                        onClick={() => onClose()}
+                />
             </div>
         </div>
     )

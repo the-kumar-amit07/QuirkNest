@@ -8,6 +8,7 @@ import { Button, Input } from "./index";
 import Logo  from "../assets/Logo.jpg";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import { Bounce, toast,ToastContainer } from "react-toastify";
 
 function Signup() {
   const dispatch = useDispatch();
@@ -17,9 +18,9 @@ function Signup() {
 
   const createAcc = async (data) => {
     console.log("this is user data:",data);
-    
     setError("");
-    try {
+    {/*
+      try {
       const userData = await authService.createAccount(data);
       if (userData) {
         const userData = await authService.getCurrentUser();
@@ -31,6 +32,30 @@ function Signup() {
     } catch (error) {
       setError(error.message);
     }
+    */}
+
+    toast.promise(
+      authService.createAccount(data),
+      {
+        pending: "Signing in...",
+        success: "Signed Up in successfully!",
+        error: "Failed to Sign Up. Try after Sometime."
+      }
+    )
+      .then(async (session) => {
+        if (session) {
+          const userData = await authService.getCurrentUser();
+          if (userData) {
+            dispatch(login(userData));
+            setTimeout(() => {
+              navigate("/")
+            }, 1000);
+          }
+        }
+      })
+      .catch((error) => {
+        setError(error.message);
+      })
   };
   return (
     <section>
@@ -99,6 +124,19 @@ function Signup() {
           </form>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+      />
     </section>
   );
 }

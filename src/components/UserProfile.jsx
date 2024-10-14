@@ -6,6 +6,7 @@ import { Button } from './index'
 import { useDispatch, useSelector } from 'react-redux';
 import authService from '../appwrite/auth'
 import { logout } from '../store/authSlice';
+import { Bounce, toast,ToastContainer} from 'react-toastify';
 // import avatar from '../data/avatar.jpeg'
 
 
@@ -59,7 +60,13 @@ const UserProfile = ({ onclose }) => {
   
   
   const handleLogout = () => {
-    authService.logOut().then(() => {
+    toast.promise(
+      authService.logOut(),
+      {
+        pending: "Logging Out...",
+        info: "Logged Out successfully!",
+      }
+    ) .then(() => {
       dispatch(logout())
       onclose()
     })
@@ -67,7 +74,8 @@ const UserProfile = ({ onclose }) => {
 
   
   return (
-    <div className='nav-item absolute right-1 top-16 bg-white p-8 rounded-lg w-96 shadow-xl '>
+    <div>
+          <div className='nav-item absolute right-1 top-16 bg-white p-8 rounded-lg w-96 shadow-xl '>
       <div className='flex justify-between items-center'>
         <p className='font-semibold text-lg'>User Profile</p>
         <Button 
@@ -115,7 +123,23 @@ const UserProfile = ({ onclose }) => {
           Logout
       </Button>
     </div>
+      </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+      />
+
     </div>
+    
   
   )
 }

@@ -8,6 +8,8 @@ import Logo  from "../assets/Logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const dispatch = useDispatch();
@@ -15,9 +17,17 @@ function Login() {
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
 
+  {/*
+    // Manually trigger a toast for debugging
+  const triggerManualToast = () => {
+    toast.success("This is a manual test notification!");
+  };
+  */}
+
   const login = async (data) => {
     setError("");
-    try {
+    {/* 
+      try {
       const session = await authService.logIn(data);
       if (session) {
         const userData = await authService.getCurrentUser();
@@ -27,8 +37,30 @@ function Login() {
         }
       }
     } catch (error) {
-      setError(error.message);
-    }
+      setError(error.message); 
+    } 
+    */}
+
+    toast.promise(
+      authService.logIn(data),
+      {
+      pending: "Logging in...",
+      success: "Logged in successfully!",
+      error: "Failed to login. Please check your credentials."
+      }
+    ).then(async (session) => {
+      if (session) {
+        const userData = await authService.getCurrentUser()
+        if (userData) {
+          dispatch(authLogin(userData))
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
+        }
+      }
+    }).catch((error) => {
+      setError(error.message)
+    })
   };
 
   return (
@@ -91,6 +123,27 @@ function Login() {
           </form>
         </div>
       </div>
+        {/* Manually trigger toast for debugging 
+        <Button
+        onClick={triggerManualToast}
+        className="mt-4 bg-green-600 text-white px-4 py-2 rounded"
+      >
+        Trigger Test Toast
+      </Button>
+        */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+      />
     </section>
   );
 }
