@@ -6,6 +6,8 @@ import LogInPage from './LogInPage'
 import SignUpPage from './SignUpPage'
 import PostPage from './PostPage'
 import Explore from './Explore'
+import MyProfile from './MyProfile'
+import ChatPage from './ChatPage'
 
 export {
     PostPage,
@@ -15,5 +17,7 @@ export {
     HomePage,
     LogInPage,
     SignUpPage,
-    Explore
+    Explore,
+    MyProfile,
+    ChatPage,
 }

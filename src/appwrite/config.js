@@ -103,20 +103,6 @@ export class Service{
         }
     }
 
-    // //get user from Document
-    // async getPostUser(userId) {
-    //     try {
-    //         return await this.databases.getDocument(
-    //             conf.appwriteDatabaseId,
-    //             conf.appwriteCollectionId,
-    //             userId,
-    //         )
-    //     } catch (error) {
-    //         console.log(`Appwrite::getPostUser::error::${error}`);
-    //         return null;
-    //     }
-    // }
-
     //fileUpload
     async uploadFile (file) {
         try {

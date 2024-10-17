@@ -48,7 +48,7 @@ function Signup() {
           if (userData) {
             dispatch(login(userData));
             setTimeout(() => {
-              navigate("/")
+              navigate("/");
             }, 1000);
           }
         }

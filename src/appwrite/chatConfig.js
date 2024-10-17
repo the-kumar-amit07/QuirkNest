@@ -15,7 +15,7 @@ export class ChatService{
     }
 
     //create Chat
-    async createChat({ senderId,message,timestamp,roomId }) {
+    async createChat({ senderId,message,timestamp = Date.now() ,roomId }) {
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
@@ -35,11 +35,14 @@ export class ChatService{
     }
 
     //fetch Chat
-    async fetchChat({ senderId, reciverId }) {
-        const queries = [Query.or(
-            Query.and(Query.equal("senderId",senderId),Query.equal("reciverId",reciverId)),
-            Query.and(Query.equal("senderId",reciverId),Query.equal("reciverId",senderId)),
-        )]
+    async fetchChat({ senderId, receiverId }) {
+        const queries = [
+            Query.or(
+                Query.and(Query.equal("senderId", senderId), Query.equal("receiverId", receiverId)), 
+                Query.and(Query.equal("senderId", receiverId), Query.equal("receiverId", senderId))  
+            )
+        ];
+        
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
@@ -68,7 +71,7 @@ export class ChatService{
     }
 
     //update Chat
-    async updateChat(messageId, { senderId, message, timestamp, roomId }) {
+    async updateChat(messageId, { senderId, message, timestamp = Date.now() ,roomId }) {
         try {
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
@@ -87,8 +90,27 @@ export class ChatService{
 
 
     //SUbscribe the realtime for neew messages
-    async subscribeMessage() {
-        
+    subscribeMessage(senderId,receiverId) {
+        const subscription = this.realtime.subscribe(
+            `databases.${conf.appwriteDatabaseId}.collections.${conf.appwriteChatCollectionId}.documents`,
+            (response) => {
+                const message = response.payload
+                if (response.event === 'databases.*.collections.*.documents.create') 
+                {
+                    if ((message.senderId === senderId && message.receiverId === receiverId)||(message.senderId === receiverId && message.receiverId === senderId)) {
+                        console.log('New message received:', message);
+                        
+                    }
+                }
+                else if (response.event === "databases.*.collections.*.documents.update") {
+                    console.log("message updated", message);
+                }
+                else if (response.event === "databases.*.collections.*.documents.delete") {
+                    console.log("message deleted", message);
+                }
+            }
+        )
+        return subscription
     }
 
 }

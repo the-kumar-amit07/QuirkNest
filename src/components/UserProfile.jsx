@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import authService from '../appwrite/auth'
 import { logout } from '../store/authSlice';
 import { Bounce, toast,ToastContainer} from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 // import avatar from '../data/avatar.jpeg'
 
 
@@ -17,6 +18,7 @@ const UserProfile = ({ onclose }) => {
   const userData = useSelector((state)=> state.auth.userData)
   const [userName, setUserName] = useState('')
   const [userMail, setUserMail] = useState('')
+  const navigate = useNavigate()
   
 
   const userProfileData = [
@@ -24,6 +26,7 @@ const UserProfile = ({ onclose }) => {
         icon: <UserPen/>,
         title: "My Profile",
         desc: "Account Settings",
+        link: "/profile",
         iconColor: "purple",
         iconBg: "none",
     },
@@ -31,6 +34,7 @@ const UserProfile = ({ onclose }) => {
         icon: <Inbox />,
         title: "My Inbox",
         desc: "Messages & Emails",
+        link: "/chat",
         iconColor: "purple",
         iconBg: "none",
     },
@@ -38,6 +42,7 @@ const UserProfile = ({ onclose }) => {
         icon: <FileImage />,
         title: "My Post",
         desc: "To-do and Daily Tasks",
+        link:"/all-post",
         iconColor: "purple",
         iconBg: "none",
     },
@@ -102,9 +107,10 @@ const UserProfile = ({ onclose }) => {
         <div key={index} 
           className='flex gap-5 border-b-1 border-color p-4 rounded-md hover:bg-purple-400 hover:text-white cursor-pointer' >
           <button 
-          type='button'
-          style={{color:item.iconColor,backgroundColor:item.iconBg}}
-          className='text-xl rounded-lg p-3'>
+            type='button'
+            style={{ color: item.iconColor, backgroundColor: item.iconBg }}
+            onClick={() =>navigate(item.link)}
+            className='text-xl rounded-lg p-3'>
             {item.icon}
           </button>    
           <div>
