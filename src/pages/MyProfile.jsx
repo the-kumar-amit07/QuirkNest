@@ -1,5 +1,10 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { CircleUserRound } from 'lucide-react';
+import authService from '../appwrite/auth';
+import appwriteServices from '../appwrite/config'
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 // Mock data for posts and user
 const user = {
@@ -25,20 +30,48 @@ const user = {
     ]
     };
 
-    const MyProfile = () => {
+const MyProfile = () => {
+
+    const [posts, setPosts] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [userData, setUserData] = useState(null)
+    const [error, setError] = useState(null);
+    const {userName} =useParams()
+    
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const user = await authService.searchByUsername(userName)
+                if (user) {
+                    setUserData(user)
+                } else {
+                    setError('User not found')
+                }
+            } catch (error) {
+                console.log("");
+                
+            }
+        }
+        fetchUserData()
+
+    },[userName])
+
+    const breakpointColumnsObj = {
+        default: 5,
+        1100: 4,
+        800: 3,
+        600: 2,
+        400: 1,
+        }
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
         {/* Profile Header */}
         <div className="flex items-center space-x-6">
             {/* Profile Picture */}
-            <img
-            src={user.profilePicture}
-            alt={`${user.username}'s profile`}
-            className="w-24 h-24 rounded-full border-2 border-gray-300"
-            />
+            <CircleUserRound className='rounded-full h-20 w-20'  alt="user-profile" />
             {/* Username and Followers */}
             <div>
-            <h1 className="text-3xl font-bold">{user.username}</h1>
+            <h1 className="text-3xl font-bold">{userData.userName ? userData.userName : 'Guest'}</h1>
             <p className="text-gray-600">{user.followers.toLocaleString()} Followers</p>
             </div>
         </div>
@@ -48,15 +81,10 @@ const user = {
 
         {/* User Posts */}
         <div>
-            <h2 className="text-2xl font-semibold mb-4">All Posts</h2>
-            <div className="space-y-6">
-            {user.posts.map(post => (
-                <div key={post.id} className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-bold mb-2">{post.title}</h3>
-                <p className="text-gray-700">{post.content}</p>
+            <h2 className="text-2xl font-semibold mb-4">My Posts</h2>
+                <div>
+                    
                 </div>
-            ))}
-            </div>
         </div>
         </div>
     );

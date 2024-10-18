@@ -7,7 +7,6 @@ import Masonry from 'react-masonry-css';
 
 function AllPostPage() {
   const [posts, setPosts] = useState([]);
-  const [userId,setUserId] = useState('')
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,7 +15,6 @@ function AllPostPage() {
         const user = await authService.getCurrentUser();
         if (user) {
           console.log('user:',user);
-          setUserId(user.$id)
           const userPosts = await appwriteServices.getUserPosts(user.$id)
           setPosts(userPosts.documents)
         }
