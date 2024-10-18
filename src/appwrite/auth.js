@@ -1,4 +1,3 @@
-
 import conf from "../conf/conf.js";
 import { Client,Account,ID,Databases,Query } from "appwrite";
 
@@ -85,7 +84,7 @@ export class AuthService {
                 queries,
             )
 
-            if (userReacord.documents.length < 0) {
+            if (userReacord.documents.length > 0) {
                 return userReacord.documents[0]
             } else {
                 return null
