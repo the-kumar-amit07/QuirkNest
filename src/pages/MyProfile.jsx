@@ -42,6 +42,8 @@ const MyProfile = () => {
         const fetchUserData = async () => {
             try {
                 const user = await authService.searchByUsername(username)
+                console.log('MyProfile data:', user);
+                
                 if (user) {
                     setUserData(user)
                 } else {
@@ -71,7 +73,7 @@ const MyProfile = () => {
             <CircleUserRound className='rounded-full h-20 w-20'  alt="user-profile" />
             {/* Username and Followers */}
             <div>
-            <h1 className="text-3xl font-bold">{username}</h1>
+            <h1 className="text-3xl font-bold">{userData?.username}</h1>
             <p className="text-gray-600">{user.followers.toLocaleString()} Followers</p>
             </div>
         </div>

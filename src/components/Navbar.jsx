@@ -121,7 +121,7 @@ function Navbar() {
             className="flex w-full justify-between items-center space-x-2"
           >
             <Input
-              placeholder="Search"
+              placeholder="Search Profile"
               type = "text"
               className="w-full h-10 px-4 py-2 text-sm bg-gray-100 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-purple-900"
               {...register("username", { required: true })}
