@@ -36,12 +36,12 @@ const MyProfile = () => {
     const [loading, setLoading] = useState(true)
     const [userData, setUserData] = useState(null)
     const [error, setError] = useState(null);
-    const {userName} =useParams()
+    const {username} =useParams()
     
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const user = await authService.searchByUsername(userName)
+                const user = await authService.searchByUsername(username)
                 if (user) {
                     setUserData(user)
                 } else {
@@ -54,7 +54,7 @@ const MyProfile = () => {
         }
         fetchUserData()
 
-    },[userName])
+    },[username])
 
     const breakpointColumnsObj = {
         default: 5,
@@ -71,7 +71,7 @@ const MyProfile = () => {
             <CircleUserRound className='rounded-full h-20 w-20'  alt="user-profile" />
             {/* Username and Followers */}
             <div>
-            <h1 className="text-3xl font-bold">{userData.userName ? userData.userName : 'Guest'}</h1>
+            <h1 className="text-3xl font-bold">{username}</h1>
             <p className="text-gray-600">{user.followers.toLocaleString()} Followers</p>
             </div>
         </div>

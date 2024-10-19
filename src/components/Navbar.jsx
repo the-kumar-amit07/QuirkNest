@@ -62,11 +62,12 @@ function Navbar() {
   // },[])
 
   const searchUser = async (data) => {
-    const { userName } = data;
+    console.log("Submitted Data:", data);
     try {
-      const user = await authService.searchByUsername(userName);
+    const user = await authService.searchByUsername(data.username)
+      console.log("", user);
       if (user) {
-        navigate(`/profile/${user.userName}`);
+        navigate(`/profile/${user.username}`);
       } else {
         console.log("user not found");
       }
@@ -123,7 +124,7 @@ function Navbar() {
               placeholder="Search"
               type = "text"
               className="w-full h-10 px-4 py-2 text-sm bg-gray-100 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-purple-900"
-              {...register("userName", { required: true })}
+              {...register("username", { required: true })}
             />
             {/* {error.userName && <p>{error.userName.message}</p>} */}
             <Button

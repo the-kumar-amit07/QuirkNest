@@ -77,16 +77,19 @@ export class AuthService {
     //Search by a username
     async searchByUsername(username) { 
         try {
+            console.log("Searching for username:", username);
             const queries = [Query.equal("username", username)]
-            const userReacord = await this.databases.listDocuments(
+            const userRecord = await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteUsersCollectionId,
                 queries,
             )
-
-            if (userReacord.documents.length > 0) {
-                return userReacord.documents[0]
+            console.log("Query Result:", userRecord); 
+            if (userRecord.documents.length > 0) {
+                console.log("User found:", userRecord.documents[0]);
+                return userRecord.documents[0]
             } else {
+                console.log("No user found");
                 return null
             }
         }
