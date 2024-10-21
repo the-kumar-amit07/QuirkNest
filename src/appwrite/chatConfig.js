@@ -1,33 +1,35 @@
 import conf from "../conf/conf.js";
-import { Client,Databases,ID,Query,Realtime } from "appwrite";
+import { Client, Databases, ID, Query } from "appwrite";
 
 export class ChatService{
     client = new Client;
     databases;
-    realtime;
 
     constructor() {
         this.client
             .setEndpoint(conf.appwriteUrl)
             .setProject(conf.appwriteProjectId);
         this.databases = new Databases(this.client);
-        this.realtime = new Realtime(this.client);
     }
+    
 
     //create Chat
-    async createChat({ senderId,message,timestamp = Date.now() ,roomId }) {
+    async createChat({ senderId,receiverId,message,timestamp = Date.now(),roomId }) {
         try {
-            return await this.databases.createDocument(
+            const create = await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteChatCollectionId,
                 ID.unique(),
                 {
                     senderId,
+                    receiverId,
                     message,
                     timestamp,
                     roomId,
                 }
             )
+            console.log("Create:",create);
+            return create
         } catch (error) {
             console.log(`Appwrite::createChat::error::${error}`);
             
@@ -36,19 +38,32 @@ export class ChatService{
 
     //fetch Chat
     async fetchChat({ senderId, receiverId }) {
+        if (!senderId || !receiverId) {
+            throw new Error("Both senderId and receiverId are required");
+        }
+        const senderIdStr = senderId.toString();
+        const receiverIdStr = receiverId.toString();
+    
+        // console.log("senderId:", senderIdStr);  
+        // console.log("receiverId:", receiverIdStr); 
+    
         const queries = [
             Query.or(
-                Query.and(Query.equal("senderId", senderId), Query.equal("receiverId", receiverId)), 
-                Query.and(Query.equal("senderId", receiverId), Query.equal("receiverId", senderId))  
+                [
+                    Query.and([Query.equal("senderId", senderIdStr), Query.equal("receiverId", receiverIdStr)]),
+                    Query.and([Query.equal("senderId", receiverIdStr), Query.equal("receiverId", senderIdStr)])
+                ]
             )
         ];
-        
+        console.log("Query:",queries);
         try {
-            return await this.databases.listDocuments(
+            const result = await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteChatCollectionId,
                 queries
             )
+            console.log("Result:",result);
+            return result;
         } catch (error) {
             console.log(`Appwrite::fetchChat::error::${error}`);
             
@@ -88,29 +103,38 @@ export class ChatService{
         }
     }
 
-
     //SUbscribe the realtime for neew messages
-    subscribeMessage(senderId,receiverId) {
-        const subscription = this.realtime.subscribe(
+    subscribeMessage(senderId, receiverId, callback) {
+        const subscription = this.client.subscribe(
             `databases.${conf.appwriteDatabaseId}.collections.${conf.appwriteChatCollectionId}.documents`,
             (response) => {
-                const message = response.payload
-                if (response.event === 'databases.*.collections.*.documents.create') 
-                {
-                    if ((message.senderId === senderId && message.receiverId === receiverId)||(message.senderId === receiverId && message.receiverId === senderId)) {
-                        console.log('New message received:', message);
-                        
+                const message = response.payload;
+                console.log("Message received in real-time:", message);
+                console.log("Full response:", response);
+                console.log("Events array:", response.events); // Log events array
+    
+                // Check if the 'create' event is present in the events array
+                const isCreateEvent = response.events.some(event => event.includes('databases.*.collections.*.documents.create'));
+    
+                if (isCreateEvent) {
+                    console.log("Comparing IDs - Sender in Message:", message.senderId, "Receiver in Message:", message.receiverId);
+                    console.log("Subscribed Sender ID:", senderId, "Subscribed Receiver ID:", receiverId);
+    
+                    if (
+                        (message.senderId === senderId && message.receiverId === receiverId) ||
+                        (message.senderId === receiverId && message.receiverId === senderId)
+                    ) {
+                        callback(message); // Trigger the callback for the new message
                     }
-                }
-                else if (response.event === "databases.*.collections.*.documents.update") {
-                    console.log("message updated", message);
-                }
-                else if (response.event === "databases.*.collections.*.documents.delete") {
-                    console.log("message deleted", message);
+                } else {
+                    console.log("Event is not a document creation event.");
                 }
             }
-        )
-        return subscription
+        );
+        return subscription;
     }
 
 }
+
+const chatService = new ChatService();
+export default chatService;

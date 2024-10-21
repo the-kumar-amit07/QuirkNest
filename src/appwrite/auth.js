@@ -14,6 +14,7 @@ export class AuthService {
         this.databases = new Databases(this.client)
         console.log("Appwrite URL:", conf.appwriteUrl);
     }
+    
 
     //create account
     async createAccount({ email, password, name }) {

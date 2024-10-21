@@ -34,7 +34,7 @@ function Navbar() {
     const name = () => {
       try {
         const user = userData;
-        console.log("user : ", user);
+        // console.log("user : ", user);
         if (user) {
           const firstName = user.name.split(" ")[0];
           setProfileName(firstName);

@@ -70,7 +70,7 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "/chat",
+        path: "/chat/:receiverId",
         element: (
           <AuthLayout authentication>
             {""}

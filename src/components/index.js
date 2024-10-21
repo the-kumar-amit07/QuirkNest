@@ -12,7 +12,7 @@ import PostCard from "./PostCard"
 import PostCardForm from "./PostCardFrom"
 import Container from "./Container";
 import AuthLayout from "./AuthLayout"
-
+import ChatBox from "./ChatBox";
 
 
 export {
@@ -30,5 +30,5 @@ export {
   PostCardForm,
   Container,
   AuthLayout,
-
+  ChatBox,
 };

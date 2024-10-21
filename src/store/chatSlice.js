@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 const initialState = {
-    messages: [],
+    messages:[],
     loading: false,
     error: null
 }
@@ -9,10 +8,9 @@ const initialState = {
 const chatSlice = createSlice({
     name: "chat",
     initialState,
-    reducer: {
+    reducers: {
         setLoading: (state) => {
             state.loading = true;
-            state.error = null
         },
         setError: (state,action) => {
             state.loading = false;
@@ -20,7 +18,7 @@ const chatSlice = createSlice({
         },
         setMessages: (state, action) => {
             state.messages = action.payload
-            state.loading = false
+            state.loading = false;
         },
         addMessage: (state, action) => {
             state.messages.push(action.payload)
