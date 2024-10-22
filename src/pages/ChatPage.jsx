@@ -52,6 +52,7 @@ function ChatPage() {
                 <ChatBox
                     loggedInUserId={sender.$id}
                     receiverId={receiver.userId}
+                    userName={receiverId}
                 />
             )}
         </div>

@@ -37,7 +37,7 @@ function App() {
       <main className='flex-grow mt-16'> {/* Add margin-top to avoid overlap with navbar */}
         <Outlet />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
     </>
   ) : null

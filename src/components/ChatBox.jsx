@@ -1,81 +1,184 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useRef } from "react";
+import { CircleUserRound } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { Button, Input } from "./index";
-import authService from '../appwrite/auth';
-import chatService from '../appwrite/chatConfig';
-import { useDispatch, useSelector } from 'react-redux';
-import { addMessage, setError, setLoading, setMessages } from '../store/chatSlice';
+import { useDispatch, useSelector } from "react-redux";
+import {
+    addMessage,
+    setError,
+    setLoading,
+    setMessages,
+} from "../store/chatSlice";
+import chatService from "../appwrite/chatConfig";
 
-function ChatBox({ loggedInUserId, receiverId }) {
-    console.log("ChatBox component rendered")
-    const { register, handleSubmit, reset } = useForm()
-    const messages = useSelector((state) => state.chat.messages)
-    const loading = useSelector((state) => state.chat.loading)
-    const error = useSelector((state)=>state.chat.error)
-    const dispatch = useDispatch()
 
-    useEffect(()=>{
+
+function ChatBox({ loggedInUserId, receiverId,userName }) {
+    const { register, handleSubmit, reset } = useForm();
+    const messages = useSelector((state) => state.chat.messages);
+    const loading = useSelector((state) => state.chat.loading);
+    const error = useSelector((state) => state.chat.error);
+    const dispatch = useDispatch();
+
+    const messagesEndRef = useRef(null);
+
+  // Scroll to the bottom when a new message arrives
+    const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+    scrollToBottom();
+    }, [messages]);
+
+    useEffect(() => {
         const fetchData = async () => {
-            console.log("loggedInUserId:", loggedInUserId);
-            console.log("receiverId:",receiverId)
-            if (loggedInUserId && receiverId) {
-                console.log("Setting loading state...");
-                dispatch(setLoading());
-                try {
-                    const chat = await chatService.fetchChat({
-                        senderId : loggedInUserId.toString(),
-                        receiverId:receiverId.toString(),
-                    })
-                    console.log("Fetched chat data:", chat); 
-                    if (chat?.documents?.length) {
-                        dispatch(setMessages(chat.documents))
-                    } else {
-                        dispatch(setError("No messages found"))
-                        console.log("No message found");
-                    }
-                } catch (error) {
-                    dispatch(setError("Error Fetching Chat Messages"))
-                    console.log(error);
-                }
-                console.log("Subscribing with IDs - Sender:", loggedInUserId, "Receiver:", receiverId);
-                const unsubscribe = chatService.subscribeMessage(loggedInUserId, receiverId, (message) => {
-                    console.log("New message received:", message);
-                    dispatch(addMessage(message));
-                });
-                return () => {
-                    console.log("Unsubscribing from real-time messages...");
-                    unsubscribe()
-                }
+        if (loggedInUserId && receiverId) {
+            dispatch(setLoading());
+            try {
+            const chat = await chatService.fetchChat({
+                senderId: loggedInUserId.toString(),
+                receiverId: receiverId.toString(),
+            });
+            if (chat?.documents?.length) {
+                dispatch(setMessages(chat.documents));
+            } else {
+                dispatch(setError("No messages found"));
             }
+            } catch (error) {
+            dispatch(setError("Error Fetching Chat Messages"));
+            }
+
+            const unsubscribe = chatService.subscribeMessage(
+            loggedInUserId,
+            receiverId,
+            (message) => {
+                dispatch(addMessage(message));
+                scrollToBottom(); // Scroll to the new message
+            }
+            );
+            return () => {
+            unsubscribe();
+            };
         }
-        fetchData()
-    },[loggedInUserId,receiverId,dispatch])
+        };
+        fetchData();
+    }, [loggedInUserId, receiverId, dispatch]);
 
     const Send = async (data) => {
         const { message } = data;
         if (message) {
-            console.log("message:", message);
-            try {
-                // Convert IDs to strings here
-                await chatService.createChat({
-                    message,
-                    senderId: loggedInUserId.toString(),  // Convert to string
-                    receiverId: receiverId.toString(),    // Convert to string
-                    roomId: receiverId.toString(),        // Convert to string
-                    timestamp: new Date().toISOString()
-                });
-                reset();
-            } catch (error) {
-                console.error("Error in sending message:", error);
-            }
+        try {
+            await chatService.createChat({
+            message,
+            senderId: loggedInUserId.toString(),
+            receiverId: receiverId.toString(),
+            roomId: receiverId.toString(),
+            timestamp: new Date().toISOString(),
+            });
+            reset();
+            scrollToBottom(); // Scroll to the bottom after sending
+        } catch (error) {
+            console.error("Error in sending message:", error);
         }
-    }
+        }
+    };
 
     return (
-        <div>
-            <div>
+        <div className="w-full h-[85vh] flex flex-col">
+        {/* Chat Header */}
+        <div className="px-5 py-3 mt-2 text-gray-600 text-lg align-center justify-center border-2 rounded-sm border-gray-600 font-semibold">
+            {userName}
+        </div>
+
+        {/* Chat Messages Section with Fixed Height */}
+        <div className="flex-grow h-0 overflow-y-auto p-5 space-y-4 bg-gray-50">
+            {loading && <p className="text-gray-500">Loading messages...</p>}
+            {error && <p className="text-red-500">{error}</p>}
+
+            {messages.map((message) => (
+            <div key={message.timestamp} className="flex">
+                {message.senderId === loggedInUserId ? (
+                <div className="ml-auto flex items-end space-x-2">
+                    <div className="flex flex-col items-end">
+                    <h5 className="text-right text-gray-600 text-sm">You</h5>
+                    <div className="px-4 py-2 bg-purple-800 text-white rounded-lg shadow">
+                        {message.message}
+                    </div>
+                    </div>
+                    <CircleUserRound className="w-10 h-10 text-purple-800" />
+                </div>
+                ) : (
+                <div className="mr-auto flex items-end space-x-2">
+                    <CircleUserRound className="w-10 h-10 text-gray-600" />
+                    <div className="flex flex-col">
+                    <h5 className="text-gray-600 text-sm">Other</h5>
+                    <div className="px-4 py-2 bg-gray-200 rounded-lg shadow">
+                        {message.message}
+                    </div>
+                    </div>
+                </div>
+                )}
+            </div>
+            ))}
+            {/* Dummy div to ensure scroll-to-bottom works */}
+            <div ref={messagesEndRef} />
+        </div>
+
+        {/* Fixed Input Section */}
+        <div className="border border-gray-300 rounded-md p-4 flex items-center space-x-3 bg-white sticky bottom-0">
+            <form onSubmit={handleSubmit(Send)} className="flex items-center w-full space-x-3">
+            <CircleUserRound className="w-10 h-10 text-purple-800" />
+            <Input
+                className="flex-grow border-none rounded-full py-2 px-4 text-sm"
+                type="text"
+                placeholder="Type a message..."
+                {...register("message", { required: true })}
+            />
+            <Button
+                className="bg-purple-800 text-white rounded-full px-4 py-2 text-sm font-semibold"
+                type="submit"
+            >
+                Send
+            </Button>
+            </form>
+        </div>
+        </div>
+    );
+}
+
+export default ChatBox;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* <div>
                 <h1>Chat with {receiverId}</h1>
                 {loading && <p>loading messeges.....</p>}
                 {error && <p style={{ color: "red" }}>{error}</p>}
@@ -101,9 +204,4 @@ function ChatBox({ loggedInUserId, receiverId }) {
                         Send
                     </Button>
                 </form>
-            </div>
-        </div>
-    )
-}
-
-export default ChatBox;
+            </div> */}

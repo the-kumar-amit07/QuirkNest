@@ -24,7 +24,7 @@ import { Button } from "../components";
             authService.searchByUsername(username),
             authService.getCurrentUser(),
             ]);
-            console.log("Searched User:", searchedUser.$id);
+            console.log("Searched User:", searchedUser);
             console.log("LoggedInUser", loggedInUser);
             
             if (searchedUser) {
@@ -70,6 +70,10 @@ import { Button } from "../components";
             navigate (`/chat/${userData.username}`)
         }
     }
+    
+        const isSameUser = currentUser?.$id === userData?.userId
+        // console.log(isSameUser ? "Yes Same User":"No Users aren't same");
+        
 
     const breakpointColumnsObj = {
         default: 5,
@@ -95,27 +99,29 @@ import { Button } from "../components";
             </p>
             </div>
         </div>
-        <div className="flex">
-            <Button
-            className={`${
-                isFollowing
-                ? "bg-red-600 hover:bg-red-700" :"bg-purple-700 hover:bg-purple-800"
-            }`}
-            onClick={isFollowing ? handleUnfollow : handlaFollow}
-            >
-            {isFollowing ? "Unfollow" : "Follow"  }
-            </Button>
-                
-                {currentUser && userData && (
+        {
+                !isSameUser && (
+                    <div className="flex">
                     <Button
-                        onClick={handleChat}
-                        className="bg-purple-700">
-                        Chat
+                    className={`${
+                        isFollowing
+                        ? "bg-red-600 hover:bg-red-700" :"bg-purple-700 hover:bg-purple-800"
+                    }`}
+                    onClick={isFollowing ? handleUnfollow : handlaFollow}
+                    >
+                    {isFollowing ? "Unfollow" : "Follow" }
                     </Button>
-            )}
-            
-        </div>
-
+                        
+                    {currentUser && userData && (
+                            <Button
+                                onClick={handleChat}
+                                className="bg-purple-700">
+                                Chat
+                            </Button>
+                    )}
+                </div>
+                )
+        }
         {/* Divider */}
         <div className="border-t border-gray-300 my-6"></div>
 

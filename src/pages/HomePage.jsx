@@ -3,6 +3,7 @@
     import { Link } from "react-router-dom";
     import Observation from "../assets/Observation.png";
     import Banner from "../assets/banner-blog.png";
+import { Footer } from "../components";
 
     function HomePage() {
     return (
@@ -119,7 +120,8 @@
                 Join Now
             </Link>
             </div>
-        </div>
+            </div>
+            <Footer/>
         </div>
     );
     }
