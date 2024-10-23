@@ -25,20 +25,24 @@ export class AuthService {
             if (existingUser) {
                 throw new Error('Username already exists');
             }
-            const userAccount = await this.account.create(ID.unique(),email,password,name);
+            const userAccount = await this.account.create(ID.unique(), email, password, name);
+            console.log("new account Id",userAccount)
             if (userAccount) {
-                await this.databases.createDocument(
+                const create = await this.databases.createDocument(
                     conf.appwriteDatabaseId,
                     conf.appwriteUsersCollectionId,
-                    ID.unique(),
+                    userAccount.$id,
+                    // ID.unique(),
                     {
                         userId: userAccount.$id,
                         username: name,
                         email: email,
                     }
                 )
+                console.log("create",create)
                 //redirect to login
-                return this.logIn({email,password})
+                return this.logIn({ email, password })
+                
             }else{
                 return userAccount
                 

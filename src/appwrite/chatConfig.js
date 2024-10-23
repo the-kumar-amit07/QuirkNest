@@ -111,10 +111,8 @@ export class ChatService{
                 const message = response.payload;
                 console.log("Message received in real-time:", message);
                 console.log("Full response:", response);
-                console.log("Events array:", response.events); // Log events array
-    
-                // Check if the 'create' event is present in the events array
-                const isCreateEvent = response.events.some(event => event.includes('databases.*.collections.*.documents.create'));
+                // console.log("Events array:", response.events); // Log events array
+                const isCreateEvent = response.events.some(event => event.includes('.create'));
     
                 if (isCreateEvent) {
                     console.log("Comparing IDs - Sender in Message:", message.senderId, "Receiver in Message:", message.receiverId);

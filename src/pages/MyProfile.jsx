@@ -5,7 +5,8 @@ import authService from "../appwrite/auth";
 import appwriteServices from "../appwrite/config";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "../components";
+import { Button,Container,PostCard,Loading } from "../components";
+import Masonry from "react-masonry-css";
 
     const MyProfile = () => {
     const [posts, setPosts] = useState([]);
@@ -34,12 +35,16 @@ import { Button } from "../components";
                 loggedInUser.$id,
                 searchedUser.$id
             );
-            setIsFollowing(isFollowing);
+                setIsFollowing(isFollowing);
+                const searchedUserPost = await appwriteServices.getUserPosts(searchedUser.userId)
+                console.log("searchedUserPost:",searchedUserPost);
+                setPosts(searchedUserPost.documents)
+                setLoading(false)
             } else {
             setError("User not found");
             }
         } catch (error) {
-            console.log("");
+            console.log("",error);
         }
         };
         fetchUserData();
@@ -67,11 +72,11 @@ import { Button } from "../components";
     
         const handleChat = () => {
         if (currentUser && userData) {
-            navigate (`/chat/${userData.username}`)
+            navigate (`/chat/${userData.$id}`)
         }
     }
     
-        const isSameUser = currentUser?.$id === userData?.userId
+        const isSameUser = currentUser?.$id === userData?.$id
         // console.log(isSameUser ? "Yes Same User":"No Users aren't same");
         
 
@@ -128,7 +133,31 @@ import { Button } from "../components";
         {/* User Posts */}
         <div>
             <h2 className="text-2xl font-semibold mb-4">My Posts</h2>
-            <div></div>
+                <div className="w-full py-8 bg-slate-50">
+                    <Container>
+                        {loading ? (
+                            <div className='flex justify-center items-center h-screen'>
+                            <Loading type='cubes' color='purple' />
+                            </div>
+                        ) : (
+                                <Masonry
+                                breakpointCols={breakpointColumnsObj}
+                                className='my-masonry-grid'
+                                columnClassName="my-masonry-grid_column"
+                                >
+                                    {posts.length === 0 ? (
+                                        <h2 className='text-xl font-semibold text-gray-700'>No posts available</h2>
+                                    ) : (
+                                            posts.map((post) => (
+                                                <div key={post.userId} className='mb-6 break-inside-avoid'>
+                                                <PostCard {...post} className="rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300" />
+                                                </div>
+                                        ))
+                                    )}
+                                </Masonry>
+                        )}
+                    </Container>
+                </div>
         </div>
         </div>
     );

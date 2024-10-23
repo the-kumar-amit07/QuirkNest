@@ -13,6 +13,7 @@ function Navbar() {
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status);
   const userData = useSelector((state) => state.auth.userData);
+  console.log("UserData:", userData);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -34,7 +35,7 @@ function Navbar() {
     const name = () => {
       try {
         const user = userData;
-        // console.log("user : ", user);
+        console.log("user : ", user);
         if (user) {
           const firstName = user.name.split(" ")[0];
           setProfileName(firstName);
@@ -65,7 +66,7 @@ function Navbar() {
     console.log("Submitted Data:", data);
     try {
     const user = await authService.searchByUsername(data.username)
-      console.log("", user);
+      console.log("searched user", user);
       if (user) {
         navigate(`/profile/${user.username}`);
       } else {
@@ -115,7 +116,7 @@ function Navbar() {
         </div>
 
         {/* Search Bar */}
-        <div className="hidden lg:flex items-center w-[500px]">
+        <div className=" lg:flex items-center w-[400px]">
           <form
             onSubmit={handleSubmit(searchUser)}
             className="flex w-full justify-between items-center space-x-2"
