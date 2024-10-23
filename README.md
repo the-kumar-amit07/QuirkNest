@@ -1,8 +1,11 @@
 Sure! Here’s the complete README.md file for your project, QuirkNest, based on the structure you provided:
 
 # QuirkNest
+![QuirkNest Logo](src/assets/Logo.jpg)
 
 **QuirkNest** is a modern and dynamic blog web app where users can create posts, explore content from other users, follow them, and engage in real-time chat. Built with a beautiful and user-friendly UI, QuirkNest aims to provide a seamless blogging and social interaction experience.
+
+![QuirkNest UI Screenshot](src/assets/screencapture QuirkNest.png)
 
 ## Features
 
