@@ -55,25 +55,37 @@ export class AuthService {
     //login
     async logIn({email,password}){
         try {
-            return await this.account.createEmailPasswordSession(email,password)
+            const session = await this.account.createEmailPasswordSession(email, password)
+            console.log("Logged in successfully, session created:", session);
+            return session
         } catch (error) {
             console.log(`Appwrite::logIn::error::${error}`);
+            throw error
         }
     }
+
+
 
     //current user
     async getCurrentUser () {
         try {
-            const user = await this.account.get();
-            return user;
+                const user = await this.account.get();
+                console.log("User session active:", user);
+                return user;
         } catch (error) {
-            console.log(`Appwrite::getCurrentUser::error::${error}`);
+            if (error.code === 401) {
+                console.log("No active session found. Redirecting to login");
+                return null
+            } else {
+                console.error(`Appwrite::getCurrentUser::error::${error.message}`);
+            }
         }
+        return null;
     }
 
     async logOut(){
         try {
-            await this.account.deleteSessions()
+            await this.account.deleteSessions('current')
         } catch (error) {
             console.log(`Appwrite::logOut::error::${error}`);
         }

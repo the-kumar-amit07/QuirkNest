@@ -9,7 +9,7 @@ import { Footer } from "../components";
     return (
         <div className="w-full bg-white mx-auto">
         {/* Animated Banner */}
-        <div className="relative px-6 h-screen bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800">
+        <div className="relative px-6 pt-10 h-screen bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800">
             <div className="container px-4 flex flex-col lg:flex-row items-center justify-between">
             <div className="text-center lg:text-left lg:w-1/2">
                 <h1 className="text-3xl lg:text-4xl font-semibold mb-4">

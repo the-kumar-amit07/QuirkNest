@@ -74,6 +74,7 @@ const UserProfile = ({ onclose }) => {
     ) .then(() => {
       setTimeout(() => {
         dispatch(logout())
+        navigate('/login')
       }, 100);
       onclose()
     })
