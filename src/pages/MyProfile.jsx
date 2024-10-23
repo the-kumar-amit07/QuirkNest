@@ -90,6 +90,7 @@ import Masonry from "react-masonry-css";
     return (
         <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
         {/* Profile Header */}
+        <div className="flex flex-col items-start">
         <div className="flex items-center space-x-6">
             {/* Profile Picture */}
             <CircleUserRound
@@ -106,7 +107,7 @@ import Masonry from "react-masonry-css";
         </div>
         {
                 !isSameUser && (
-                    <div className="flex">
+                    <div className="flex space-x-4 p-4">
                     <Button
                     className={`${
                         isFollowing
@@ -126,7 +127,8 @@ import Masonry from "react-masonry-css";
                     )}
                 </div>
                 )
-        }
+        }    
+        </div>
         {/* Divider */}
         <div className="border-t border-gray-300 my-6"></div>
 

@@ -185,7 +185,7 @@ function Navbar() {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="lg:hidden absolute top-0 inset-x-0 z-40 bg-white p-4 shadow-lg rounded-lg">
-          <nav className="space-y-4">
+          <nav className="space-y-4 mt-8">
             {menuItems.map((item) => (
               <button
                 key={item.name}
@@ -221,7 +221,7 @@ function Navbar() {
                           toggleMenu();
                           navigate(item.slug);
                         }}
-                        className="w-full"
+                        className="w-full text-white bg-purple-800 hover:bg-purple-900"
                       >
                         {item.name}
                       </Button>
