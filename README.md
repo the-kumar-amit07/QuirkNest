@@ -1,4 +1,3 @@
-Sure! Here’s the complete README.md file for your project, QuirkNest, based on the structure you provided:
 
 # QuirkNest
 ![QuirkNest Logo](src/assets/Logo.jpg)
